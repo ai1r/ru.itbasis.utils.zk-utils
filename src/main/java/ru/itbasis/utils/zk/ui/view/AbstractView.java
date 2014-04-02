@@ -10,6 +10,8 @@ import org.zkoss.zul.Toolbar;
 import ru.itbasis.utils.zk.ui.toolbar.ToolbarButton;
 
 abstract public class AbstractView extends Borderlayout {
+	public static final String DEFAULT_VFLEX = "1";
+
 	protected Toolbar _toolbar;
 
 	protected ToolbarButton actionAdd;

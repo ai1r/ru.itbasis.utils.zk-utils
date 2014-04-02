@@ -17,8 +17,8 @@ abstract public class AbstractField<T> extends AbstractComponent {
 	public static final String DEFAULT_WIDTH = "98%";
 	public static final String DEFAULT_HFLEX = "1";
 
-	public static final String CONSTRAINT_NOEMPTY         = "no empty,after_start";
-	public static final String CONSTRAINT_NUMBER_POSITIVE = "no negative,no zero,after_start";
+	public static final String CONSTRAINT_NOEMPTY         = "no empty,end_after";
+	public static final String CONSTRAINT_NUMBER_POSITIVE = "no negative,no zero,end_after";
 
 	protected HtmlBasedComponent box;
 

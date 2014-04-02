@@ -30,7 +30,7 @@ abstract public class AbstractViewList extends AbstractView {
 	protected Listbox initList(Component parent) {
 		Listbox list = new Listbox();
 		list.setParent(parent);
-		list.setVflex("1");
+		list.setVflex(DEFAULT_VFLEX);
 		list.setAutopaging(true);
 		list.setPagingPosition("both");
 		list.setMold("paging");
