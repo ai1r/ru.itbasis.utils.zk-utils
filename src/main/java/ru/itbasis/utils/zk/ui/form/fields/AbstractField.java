@@ -20,9 +20,12 @@ abstract public class AbstractField<T> extends AbstractComponent {
 	public static final String CONSTRAINT_NOEMPTY         = "no empty,end_after";
 	public static final String CONSTRAINT_NUMBER_POSITIVE = "no negative,no zero,end_after";
 
+	protected AbstractComponent _this;
+
 	protected HtmlBasedComponent box;
 
 	protected AbstractField() {
+		_this = this;
 		ConventionWires.wireVariables(this, this);
 		initBox();
 	}

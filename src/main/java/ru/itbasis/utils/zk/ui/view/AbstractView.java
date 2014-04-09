@@ -11,6 +11,7 @@ import ru.itbasis.utils.zk.ui.toolbar.ToolbarButton;
 
 abstract public class AbstractView extends Borderlayout {
 	public static final String DEFAULT_VFLEX = "1";
+	public static final String DEFAULT_HFLEX = "1";
 
 	protected Toolbar _toolbar;
 
@@ -18,7 +19,6 @@ abstract public class AbstractView extends Borderlayout {
 	protected ToolbarButton actionEdit;
 
 	public AbstractView() {
-//		setPage(Executions.getCurrent().getDesktop().getFirstPage());
 		setVflex("1");
 
 		ConventionWires.wireVariables(this, this);

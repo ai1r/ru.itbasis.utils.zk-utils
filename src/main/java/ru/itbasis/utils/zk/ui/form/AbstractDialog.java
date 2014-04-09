@@ -19,10 +19,11 @@ abstract public class AbstractDialog extends Window {
 	private static final int MIN_FORM_HEIGHT   = 400;
 	private static final int MIN_PREVIEW_WIDTH = 400;
 
-	protected Window       _this;
-	protected Borderlayout _layout;
-	protected Toolbar      _toolbar;
-	protected Grid         _form;
+	protected AbstractDialog _this;
+
+	protected Borderlayout   _layout;
+	protected Toolbar        _toolbar;
+	protected Grid           _form;
 
 	protected ToolbarButton actionSave;
 

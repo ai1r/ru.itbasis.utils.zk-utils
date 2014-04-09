@@ -10,7 +10,10 @@ import org.zkoss.zul.Toolbarbutton;
 public class ToolbarButton extends Toolbarbutton {
 	private static final String MODE_TOGGLE = "toggle";
 
+	protected ToolbarButton _this;
+
 	public ToolbarButton(Toolbar parent) {
+		_this = this;
 		setParent(parent);
 	}
 
