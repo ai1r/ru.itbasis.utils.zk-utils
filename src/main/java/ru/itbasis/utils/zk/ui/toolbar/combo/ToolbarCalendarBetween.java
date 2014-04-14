@@ -17,7 +17,6 @@ public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> 
 
 	private Calendar fieldStart;
 	private Calendar fieldEnd;
-	private Button   apply;
 
 	public ToolbarCalendarBetween(Toolbar parent) {
 		super(parent);
@@ -47,9 +46,7 @@ public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> 
 		vbox.appendChild(hbox);
 		vbox.setAlign("end");
 
-		apply = new Button(Labels.getLabel("form.action.apply", "apply"));
-		apply.setParent(vbox);
-		apply.addEventListener(Events.ON_CLICK, new Event$Apply$OnClick());
+		appendButtonApply(vbox, new Event$Apply$OnClick());
 
 		addEventListener(Events.ON_OPEN, new Event$OnOpen());
 	}
@@ -80,7 +77,7 @@ public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> 
 
 			if (!t.isValid()) {
 				// TODO Вынести labels в метод
-				throw new WrongValueException(apply, Labels.getRequiredLabel("err.date.beetwen.startAfterEnd"));
+				throw new WrongValueException(btnApply, Labels.getRequiredLabel("err.date.beetwen.startAfterEnd"));
 			}
 			getDropdown().close();
 			setFilter(t);
@@ -90,7 +87,6 @@ public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> 
 	private class Event$OnOpen implements EventListener<Event> {
 		@Override
 		public void onEvent(Event event) throws Exception {
-			LOG.trace(LogMsg.EVENT, event);
 			fieldStart.setValue(filter.getStart().getTime());
 			fieldEnd.setValue(filter.getEnd().getTime());
 		}

@@ -106,7 +106,6 @@ abstract public class AbstractViewList extends AbstractView {
 	public class Event$List$Refresh implements EventListener<Event> {
 		@Override
 		public void onEvent(Event event) throws Exception {
-			LOG.trace(LogMsg.EVENT, event);
 			if (actionEdit != null) {
 				actionEdit.setDisabled(true);
 			}

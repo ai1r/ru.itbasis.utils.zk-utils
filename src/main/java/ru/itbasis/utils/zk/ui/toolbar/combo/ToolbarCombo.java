@@ -63,7 +63,6 @@ public class ToolbarCombo extends Combobutton {
 	private class Event$OnClick implements EventListener<Event> {
 		@Override
 		public void onEvent(Event event) throws Exception {
-			LOG.trace(LogMsg.EVENT, event);
 			Combobutton cb = (Combobutton) event.getTarget();
 			cb.open();
 		}

@@ -6,7 +6,6 @@ import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Tabbox;
-import ru.itbasis.utils.zk.LogMsg;
 import ru.itbasis.utils.zk.ui.TabboxUtils;
 
 public class OpenTabListener implements EventListener<Event> {
@@ -24,7 +23,6 @@ public class OpenTabListener implements EventListener<Event> {
 
 	@Override
 	public void onEvent(Event event) throws Exception {
-		LOG.trace(LogMsg.EVENT, event);
 		LOG.trace("clazz: {}", clazz);
 		TabboxUtils.goTab(tabbox, Labels.getRequiredLabel(tabName), clazz);
 	}

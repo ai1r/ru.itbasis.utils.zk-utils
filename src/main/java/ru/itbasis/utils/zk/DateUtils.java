@@ -39,12 +39,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	}
 
 	public static String formatAsShortDate(final Date date) {
-		return getShortDate(toCalendar(date));
-	}
-
-	@Deprecated
-	public static String getShortDate(final Calendar value) {
-		return formatAsShortDate(value);
+		return formatAsShortDate(toCalendar(date));
 	}
 
 	public static String formatAsShortDate(final Calendar value) {

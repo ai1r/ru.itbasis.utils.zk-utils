@@ -3,7 +3,11 @@ package ru.itbasis.utils.zk.ui.toolbar.combo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zkoss.util.resource.Labels;
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Popup;
 import org.zkoss.zul.Toolbar;
 import ru.itbasis.utils.zk.LogMsg;
@@ -14,6 +18,8 @@ public class ToolbarComboFilter<T> extends ToolbarCombo {
 	protected T      filter;
 	protected String labelName;
 
+	protected Button btnApply;
+
 	public ToolbarComboFilter(Toolbar toolbar) {
 		super(toolbar);
 	}
@@ -21,7 +27,6 @@ public class ToolbarComboFilter<T> extends ToolbarCombo {
 	public ToolbarComboFilter(Toolbar toolbar, String labelName) {
 		super(toolbar);
 		setLabelName(labelName);
-		updateLabel();
 	}
 
 	public ToolbarComboFilter(Toolbar toolbar, Popup popup) {
@@ -31,7 +36,6 @@ public class ToolbarComboFilter<T> extends ToolbarCombo {
 	public ToolbarComboFilter(Toolbar toolbar, String labelName, Popup popup) {
 		super(toolbar, popup);
 		setLabelName(labelName);
-		updateLabel();
 	}
 
 	public T getFilter() {
@@ -51,5 +55,12 @@ public class ToolbarComboFilter<T> extends ToolbarCombo {
 
 	public void setLabelName(String labelName) {
 		this.labelName = labelName;
+	}
+
+	public Button appendButtonApply(Component parent, EventListener<Event> listener) {
+		btnApply = new Button(Labels.getLabel("form.action.apply", "apply"));
+		btnApply.setParent(parent);
+		btnApply.addEventListener(Events.ON_CLICK, listener);
+		return btnApply;
 	}
 }

@@ -9,7 +9,6 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zul.Menuitem;
-import ru.itbasis.utils.zk.LogMsg;
 import ru.itbasis.utils.zk.ui.TabboxUtils;
 
 import java.util.List;
@@ -32,9 +31,7 @@ abstract public class AbstractTabMenuController extends SelectorComposer<Compone
 	private class OpenTabListener implements EventListener<Event> {
 		@Override
 		public void onEvent(Event event) throws Exception {
-			LOG.trace(LogMsg.EVENT, event);
 			Menuitem mi = (Menuitem) event.getTarget();
-
 			TabboxUtils.goTab(mi.getRoot(), mi);
 		}
 	}
