@@ -6,6 +6,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Textbox;
+import ru.itbasis.utils.zk.LogMsg;
 
 public class FieldText extends AbstractField<String> {
 	private transient static final Logger LOG = LoggerFactory.getLogger(FieldText.class.getName());
@@ -33,7 +34,7 @@ public class FieldText extends AbstractField<String> {
 
 	@Override
 	public void setValue(String value) {
-		LOG.trace("value: {}", value);
+		LOG.trace(LogMsg.VALUE, value);
 		if (value == null || value.isEmpty()) {
 			clear();
 			return;

@@ -8,6 +8,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
+import ru.itbasis.utils.zk.LogMsg;
 
 import java.lang.reflect.Constructor;
 
@@ -31,7 +32,7 @@ public class OpenDialogListener implements EventListener<Event> {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void onEvent(Event event) throws Exception {
-		LOG.trace("event: {}", event);
+		LOG.trace(LogMsg.EVENT, event);
 		LOG.debug("class: {}", clazz);
 		if (flagUnderConstruction) {
 			final String msg = Labels.getLabel("msg.underConstruction",

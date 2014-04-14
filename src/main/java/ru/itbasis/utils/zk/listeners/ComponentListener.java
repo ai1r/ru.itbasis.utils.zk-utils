@@ -11,6 +11,7 @@ import org.zkoss.zk.ui.util.Composer;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
+import ru.itbasis.utils.zk.LogMsg;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ComponentListener implements Composer {
 	private void initTabboxEvents(Tabbox tabbox) {
 		LOG.trace("tabbox: {}", tabbox);
 		for (EventListener<? extends Event> eventListener : tabbox.getEventListeners(Events.ON_SELECT)) {
-			LOG.trace("event: {}", eventListener);
+			LOG.trace(LogMsg.EVENT, eventListener);
 			if (eventListener instanceof TabSelectListener) {
 				return;
 			}

@@ -10,6 +10,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.ListitemRenderer;
+import ru.itbasis.utils.zk.LogMsg;
 import ru.itbasis.utils.zk.ui.view.cells.CellFlag;
 
 import java.text.DateFormat;
@@ -70,7 +71,7 @@ abstract public class AbstractViewList extends AbstractView {
 			}
 
 			final String value = sdfD.format(calendar.getTime());
-			LOG.trace("date: {}", value);
+			LOG.trace(LogMsg.VALUE, value);
 
 			cell.appendChild(new Text(value));
 
@@ -84,7 +85,7 @@ abstract public class AbstractViewList extends AbstractView {
 			}
 
 			final String value = sdfDT.format(calendar.getTime());
-			LOG.trace("date: {}", value);
+			LOG.trace(LogMsg.VALUE, value);
 
 			cell.appendChild(new Text(value));
 
@@ -105,7 +106,7 @@ abstract public class AbstractViewList extends AbstractView {
 	public class Event$List$Refresh implements EventListener<Event> {
 		@Override
 		public void onEvent(Event event) throws Exception {
-			LOG.trace("event: {}", event);
+			LOG.trace(LogMsg.EVENT, event);
 			if (actionEdit != null) {
 				actionEdit.setDisabled(true);
 			}

@@ -20,34 +20,34 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		SDF_DATE_SHORT = new SimpleDateFormat(DateFormats.getDateFormat(DateFormat.SHORT, null, null));
 	}
 
-	public static Calendar getFirstDay(Calendar value) {
+	public static Calendar getFirstDay(final Calendar value) {
 		Calendar result = truncate(value, Calendar.MONTH);
-		LOG.trace("result: {}", result.getTime());
+		LOG.trace(LogMsg.VALUE, result.getTime());
 		return result;
 	}
 
-	public static Calendar getLastDay(Calendar value) {
+	public static Calendar getLastDay(final Calendar value) {
 		Calendar result = ceiling(value, Calendar.MONTH);
 		result.add(Calendar.DAY_OF_MONTH, -1);
-		LOG.trace("result: {}", result.getTime());
+		LOG.trace(LogMsg.VALUE, result.getTime());
 		return result;
 	}
 
 	@Deprecated
-	public static String getShortDate(Date value) {
+	public static String getShortDate(final Date value) {
 		return formatAsShortDate(value);
 	}
 
-	public static String formatAsShortDate(Date date) {
+	public static String formatAsShortDate(final Date date) {
 		return getShortDate(toCalendar(date));
 	}
 
 	@Deprecated
-	public static String getShortDate(Calendar value) {
+	public static String getShortDate(final Calendar value) {
 		return formatAsShortDate(value);
 	}
 
-	public static String formatAsShortDate(Calendar value) {
+	public static String formatAsShortDate(final Calendar value) {
 		return SDF_DATE_SHORT.format(value.getTime());
 	}
 }
