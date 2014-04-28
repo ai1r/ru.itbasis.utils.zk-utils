@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ru.itbasis.utils</groupId>
 	<artifactId>zk-utils</artifactId>
-	<version>1.5-SNAPSHOT</version>
+	<version>1.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>zk-utils</name>
@@ -18,28 +19,33 @@
 	</licenses>
 
 	<parent>
-		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
+		<groupId>org.sonatype.oss</groupId>
 		<version>7</version>
 	</parent>
 
+	<developers>
+		<developer>
+			<name>Victor Alenkov</name>
+			<email>Alenkov.Victor@gmail.com</email>
+		</developer>
+	</developers>
 	<scm>
 		<connection>scm:git:git@github.com:BorzdeG/ru.itbasis.utils.zk-utils.git</connection>
 		<developerConnection>scm:git:git@github.com:BorzdeG/ru.itbasis.utils.zk-utils.git</developerConnection>
-		<url>http://github.com/BorzdeG/ru.itbasis.utils.zk-utils</url>
-    <tag>HEAD</tag>
-  </scm>
+		<url>git@github.com:BorzdeG/ru.itbasis.utils.zk-utils</url>
+	</scm>
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
+					<encoding>${encoding}</encoding>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<testSource>${java.version}</testSource>
 					<testTarget>${java.version}</testTarget>
-					<encoding>${encoding}</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -48,12 +54,10 @@
 				<version>1.6</version>
 				<configuration>
 					<complianceLevel>${java.version}</complianceLevel>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
 					<encoding>${encoding}</encoding>
 					<showWeaveInfo>true</showWeaveInfo>
-					<!--<Xlint>ignore</Xlint>-->
-					<verbose>true</verbose>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 				<executions>
 					<execution>
@@ -100,11 +104,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.5</version>
-				<!--<configuration>-->
-					<!--<providerImplementations>-->
-						<!--<git>jgit</git>-->
-					<!--</providerImplementations>-->
-				<!--</configuration>-->
 				<dependencies>
 					<dependency>
 						<groupId>org.apache.maven.scm</groupId>
@@ -117,11 +116,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-scm-plugin</artifactId>
 				<version>1.9</version>
-				<!--<configuration>-->
-					<!--<providerImplementations>-->
-						<!--<git>jgit</git>-->
-					<!--</providerImplementations>-->
-				<!--</configuration>-->
 				<dependencies>
 					<dependency>
 						<groupId>org.apache.maven.scm</groupId>
