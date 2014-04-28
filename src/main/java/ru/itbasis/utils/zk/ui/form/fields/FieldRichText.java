@@ -13,7 +13,7 @@ public class FieldRichText extends AbstractField<String> {
 		_editor = new CKeditor();
 		_editor.setHflex(DEFAULT_HFLEX);
 		_editor.setCustomConfigurationsPath("/static/js/ckeditor.js");
-		_editor.setParent(box);
+		_editor.setParent(getBox());
 	}
 
 	public void setConfigPath(String value) {

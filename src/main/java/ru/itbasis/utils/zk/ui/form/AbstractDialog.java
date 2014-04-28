@@ -1,5 +1,7 @@
 package ru.itbasis.utils.zk.ui.form;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Components;
@@ -15,15 +17,17 @@ import ru.itbasis.utils.zk.ui.form.fields.AbstractField;
 import ru.itbasis.utils.zk.ui.toolbar.ToolbarButton;
 
 abstract public class AbstractDialog extends Window {
+	private transient static final Logger LOG = LoggerFactory.getLogger(AbstractDialog.class.getName());
+
 	private static final int MIN_FORM_WIDTH    = 500;
 	private static final int MIN_FORM_HEIGHT   = 400;
 	private static final int MIN_PREVIEW_WIDTH = 400;
 
 	protected AbstractDialog _this;
 
-	protected Borderlayout   _layout;
-	protected Toolbar        _toolbar;
-	protected Grid           _form;
+	protected Borderlayout _layout;
+	protected Toolbar      _toolbar;
+	protected Grid         _form;
 
 	protected ToolbarButton actionSave;
 
@@ -99,12 +103,26 @@ abstract public class AbstractDialog extends Window {
 		c1.setParent(head);
 	}
 
-	@SuppressWarnings("unused")
+	public void enablePreview(boolean flag) {
+		if (flag) {
+			enablePreview(MIN_FORM_WIDTH);
+		} else {
+			disablePreview();
+		}
+	}
+
+	private void disablePreview() {
+		final Center center = _layout.getCenter();
+		Components.removeAllChildren(center);
+		_form.setParent(center);
+		setWidth(MIN_FORM_WIDTH + "px");
+	}
+
 	public void enablePreview(int formWidth) {
 		West west = _layout.getWest();
 		if (west == null) {
 			west = new West();
-			west.setBorder("mone");
+			west.setBorder("none");
 			west.setParent(_layout);
 		}
 		west.setWidth(formWidth + "px");
@@ -140,18 +158,20 @@ abstract public class AbstractDialog extends Window {
 	}
 
 	@SuppressWarnings("unused")
-	protected XulElement appendFormRow(AbstractField fieldComp) {
-		return appendFormRow(fieldComp.getBox());
+	protected XulElement appendFormRow(AbstractField field) {
+		LOG.trace("field: {}", field);
+		return appendFormRow(field.getBox());
 	}
 
-	protected XulElement appendFormRow(HtmlBasedComponent fieldComp) {
+	protected XulElement appendFormRow(HtmlBasedComponent comp) {
+		LOG.trace("comp: {}", comp);
 		final Row row = appendRow();
 
 		Cell cell = new Cell();
 		cell.setColspan(2);
 		cell.setParent(row);
 
-		fieldComp.setParent(cell);
+		comp.setParent(cell);
 
 		return row;
 	}

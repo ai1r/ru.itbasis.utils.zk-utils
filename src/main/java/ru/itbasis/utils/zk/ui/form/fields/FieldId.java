@@ -10,7 +10,7 @@ public class FieldId extends AbstractField<Long> {
 		super();
 		label = new Label();
 		label.setHflex(DEFAULT_HFLEX);
-		label.setParent(box);
+		label.setParent(getBox());
 	}
 
 	public FieldId(Long id) {

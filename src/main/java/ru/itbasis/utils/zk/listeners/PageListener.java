@@ -12,6 +12,7 @@ import org.zkoss.zk.ui.util.GenericInitiator;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
+import org.zkoss.zul.Tabs;
 
 import java.util.List;
 
@@ -49,6 +50,19 @@ public class PageListener extends GenericInitiator {
 		}
 
 		Tab tab = tabbox.getSelectedTab();
+		if (tab == null) {
+			final Tabs tabboxTabs = tabbox.getTabs();
+			if (tabboxTabs == null) {
+				return;
+			}
+			final List<Component> tabs = tabboxTabs.getChildren();
+			if (!tabs.isEmpty()) {
+				tab = (Tab) tabs.get(0);
+			}
+		}
+		if (tab == null) {
+			return;
+		}
 		Tabpanel tabPanel = tab.getLinkedPanel();
 		LOG.trace("tab: {}, tabPanel: {}", tab, tabPanel);
 		Events.postEvent(Events.ON_SELECT, tab, null);

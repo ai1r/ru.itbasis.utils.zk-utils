@@ -18,11 +18,11 @@ public class FieldDateTime extends AbstractField<Calendar> {
 
 		_date = new Datebox();
 		_date.setHflex(DEFAULT_HFLEX);
-		_date.setParent(box);
+		_date.setParent(getBox());
 
 		_time = new Timebox();
 		_time.setHflex(DEFAULT_HFLEX);
-		_time.setParent(box);
+		_time.setParent(getBox());
 	}
 
 	public FieldDateTime(EventListener<Event> listener) {

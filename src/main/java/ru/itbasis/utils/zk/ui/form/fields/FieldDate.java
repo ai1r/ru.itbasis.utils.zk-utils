@@ -15,7 +15,7 @@ public class FieldDate extends AbstractField<Calendar> {
 		super();
 		_date = new Datebox();
 		_date.setHflex(DEFAULT_HFLEX);
-		_date.setParent(box);
+		_date.setParent(getBox());
 	}
 
 	public FieldDate(EventListener<Event> listener) {

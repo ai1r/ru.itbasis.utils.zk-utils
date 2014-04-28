@@ -3,9 +3,32 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>ru.itbasis</groupId>
+	<groupId>ru.itbasis.utils</groupId>
 	<artifactId>zk-utils</artifactId>
-	<version>1.3-SNAPSHOT</version>
+	<version>1.4-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>zk-utils</name>
+	<description>Utils from Zk Framework from simple create UI</description>
+	<url>https://github.com/BorzdeG/ru.itbasis.utils.zk-utils</url>
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License v3 (LGPLv3)</name>
+			<url>https://www.gnu.org/licenses/lgpl.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>9</version>
+	</parent>
+
+	<scm>
+		<url>git@github.com:BorzdeG/ru.itbasis.utils.zk-utils.git</url>
+		<connection>scm:git:git://github.com:BorzdeG/ru.itbasis.utils.zk-utils.git</connection>
+	</scm>
 	<build>
 		<plugins>
 			<plugin>
@@ -53,14 +76,63 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-	<repositories>
-		<repository>
-			<id>zk repository</id>
-			<url>http://mavensync.zkoss.org/maven2</url>
-		</repository>
-	</repositories>
+	<profiles>
+		<profile>
+			<id>sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<configuration>
+							<passphrase>${gpg.passphrase}</passphrase>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	<!--<repositories>-->
+	<!--<repository>-->
+	<!--<id>zk repository</id>-->
+	<!--<url>http://mavensync.zkoss.org/maven2</url>-->
+	<!--</repository>-->
+	<!--</repositories>-->
 	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>

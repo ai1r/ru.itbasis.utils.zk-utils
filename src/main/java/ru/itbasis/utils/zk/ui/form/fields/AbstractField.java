@@ -1,15 +1,20 @@
 package ru.itbasis.utils.zk.ui.form.fields;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zkoss.zk.ui.AbstractComponent;
 import org.zkoss.zk.ui.HtmlBasedComponent;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.ConventionWires;
+import org.zkoss.zul.Box;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Hbox;
 
 abstract public class AbstractField<T> extends AbstractComponent {
+	private transient static final Logger LOG = LoggerFactory.getLogger(AbstractField.class.getName());
+
 	public static final String ICON_NEW     = "z-icon-plus";
 	public static final String ICON_EDIT    = "z-icon-pencil";
 	public static final String ICON_REFRESH = "z-icon-refresh";
@@ -22,17 +27,18 @@ abstract public class AbstractField<T> extends AbstractComponent {
 
 	protected AbstractComponent _this;
 
-	protected HtmlBasedComponent box;
+	private HtmlBasedComponent box;
 
 	protected AbstractField() {
 		_this = this;
 		ConventionWires.wireVariables(this, this);
-		initBox();
+		box = initBox();
 	}
 
-	protected void initBox() {
-		box = new Hbox();
+	protected HtmlBasedComponent initBox() {
+		Box box = new Hbox();
 		box.setHflex(DEFAULT_WIDTH);
+		return box;
 	}
 
 	public HtmlBasedComponent getBox() {
@@ -74,6 +80,7 @@ abstract public class AbstractField<T> extends AbstractComponent {
 
 	@SuppressWarnings("unused")
 	public void setVisibleRow(boolean flag) {
+		LOG.trace("box: {}", box);
 		box.getParent().getParent().setVisible(flag);
 	}
 
