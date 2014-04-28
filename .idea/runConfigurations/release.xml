@@ -1,7 +1,23 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="release" type="MavenRunConfiguration" factoryName="Maven">
     <MavenSettings>
-      <option name="myGeneralSettings" />
+      <option name="myGeneralSettings">
+        <MavenGeneralSettings>
+          <option name="alwaysUpdateSnapshots" value="false" />
+          <option name="checksumPolicy" value="NOT_SET" />
+          <option name="failureBehavior" value="NOT_SET" />
+          <option name="localRepository" value="" />
+          <option name="mavenHome" value="D:\Application Data\apache-maven-3.0.5" />
+          <option name="nonRecursive" value="false" />
+          <option name="outputLevel" value="DEBUG" />
+          <option name="pluginUpdatePolicy" value="DEFAULT" />
+          <option name="printErrorStackTraces" value="false" />
+          <option name="threads" />
+          <option name="usePluginRegistry" value="false" />
+          <option name="userSettingsFile" value="" />
+          <option name="workOffline" value="false" />
+        </MavenGeneralSettings>
+      </option>
       <option name="myRunnerSettings" />
       <option name="myRunnerParameters">
         <MavenRunnerParameters>
@@ -10,6 +26,7 @@
           </option>
           <option name="goals">
             <list>
+              <option value="release:clean" />
               <option value="release:prepare" />
             </list>
           </option>
@@ -21,7 +38,13 @@
         </MavenRunnerParameters>
       </option>
     </MavenSettings>
+    <RunnerSettings RunnerId="Debug">
+      <option name="DEBUG_PORT" value="" />
+      <option name="TRANSPORT" value="0" />
+      <option name="LOCAL" value="true" />
+    </RunnerSettings>
     <RunnerSettings RunnerId="Run" />
+    <ConfigurationWrapper RunnerId="Debug" />
     <ConfigurationWrapper RunnerId="Run" />
     <method />
   </configuration>
