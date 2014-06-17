@@ -2,8 +2,6 @@ package ru.itbasis.utils.zk.ui.form.fields;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Textbox;
 
@@ -20,36 +18,25 @@ public class FieldText extends AbstractField<String> {
 		_text = new Textbox();
 		_text.setHflex(DEFAULT_HFLEX);
 		_text.setParent(getBox());
-	}
-
-	public FieldText(EventListener<Event> listener) {
-		this();
-		addEventListener(Events.ON_CHANGE, listener);
+		_text.addEventListener(Events.ON_CHANGE, new Event$Default$OnChange());
 	}
 
 	@Override
-	public String getValue() {
+	public String getRawValue() {
 		return _text.getValue();
 	}
 
 	@Override
-	public void setValue(String value) {
+	public void setRawValue(String value) {
 		if (value == null) {
-			clear();
+			_text.setRawValue("");
 			return;
 		}
 		_text.setValue(value);
-		Events.postEvent(Events.ON_CHANGE, _this, value);
 	}
 
-	@Override
-	public void clear() {
-		setValue("");
-	}
-
-	public void setConstraint(String value) {
-		LOG.debug("constraint: {}", value);
-		_text.setConstraint(value);
+	public int getRows() {
+		return _text.getRows();
 	}
 
 	public void setRows(int value) {
@@ -57,7 +44,8 @@ public class FieldText extends AbstractField<String> {
 		_text.setRows(value);
 	}
 
-	public int getRows() {
-		return _text.getRows();
+	public void setConstraint(String value) {
+		LOG.debug("constraint: {}", value);
+		_text.setConstraint(value);
 	}
 }

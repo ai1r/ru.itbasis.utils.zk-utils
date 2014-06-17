@@ -15,12 +15,27 @@ abstract public class AbstractListHeaders extends Listhead {
 		setSizable(true);
 	}
 
+	@Deprecated
 	public Listheader addHeader(String label) {
+		return addHeaderLabel(label);
+	}
+
+	public Listheader addHeaderLabel(String label) {
 		Listheader header = new Listheader();
 		if (label != null && !label.trim().isEmpty()) {
 			header.setLabel(Labels.getRequiredLabel(label));
 		}
 		header.setTooltiptext(Labels.getLabel(label));
+		header.setParent(this);
+		return header;
+	}
+
+	public Listheader addHeaderLabelRaw(String label) {
+		Listheader header = new Listheader();
+		if (label != null && !label.trim().isEmpty()) {
+			header.setLabel(label);
+		}
+		header.setTooltiptext(label);
 		header.setParent(this);
 		return header;
 	}

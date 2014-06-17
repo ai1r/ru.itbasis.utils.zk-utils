@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
-	private transient static final Logger LOG = LoggerFactory.getLogger(DateUtils.class.getName());
+	private static final transient Logger LOG = LoggerFactory.getLogger(DateUtils.class.getName());
 
 	private static SimpleDateFormat SDF_SHORT;
 	private static SimpleDateFormat SDF_DATE_SHORT;
@@ -21,13 +21,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	}
 
 	public static Calendar getFirstDay(final Calendar value) {
-		Calendar result = truncate(value, Calendar.MONTH);
+		final Calendar result = truncate(value, Calendar.MONTH);
 		LOG.trace(LogMsg.VALUE, result.getTime());
 		return result;
 	}
 
 	public static Calendar getLastDay(final Calendar value) {
-		Calendar result = ceiling(value, Calendar.MONTH);
+		final Calendar result = ceiling(value, Calendar.MONTH);
 		result.add(Calendar.DAY_OF_MONTH, -1);
 		LOG.trace(LogMsg.VALUE, result.getTime());
 		return result;

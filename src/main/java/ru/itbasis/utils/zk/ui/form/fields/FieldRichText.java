@@ -14,38 +14,33 @@ public class FieldRichText extends AbstractField<String> {
 		_editor.setHflex(DEFAULT_HFLEX);
 		_editor.setCustomConfigurationsPath("/static/js/ckeditor.js");
 		_editor.setParent(getBox());
+		_editor.addEventListener(Events.ON_CHANGE, new Event$Default$OnChange());
 	}
 
-	public void setConfigPath(String value) {
-		_editor.setCustomConfigurationsPath(value);
+	@Override
+	public String getRawValue() {
+		return _editor.getValue();
 	}
 
-	public void setConfig(Map<String, Object> config) {
-		_editor.setConfig(config);
+	@Override
+	public void setRawValue(String value) {
+		if (value == null) {
+			_editor.setValue("");
+			return;
+		}
+		_editor.setValue(value);
 	}
 
 	public Map<String, Object> getConfig() {
 		return _editor.getConfig();
 	}
 
-	@Override
-	public String getValue() {
-		return _editor.getValue();
+	public void setConfig(Map<String, Object> config) {
+		_editor.setConfig(config);
 	}
 
-	@Override
-	public void setValue(String value) {
-		if (value == null || value.isEmpty()) {
-			clear();
-			return;
-		}
-		_editor.setValue(value);
-		Events.postEvent(Events.ON_CHANGE, _editor, null);
+	public void setConfigPath(String value) {
+		_editor.setCustomConfigurationsPath(value);
 	}
 
-	@Override
-	public void clear() {
-		_editor.setValue("");
-		Events.postEvent(Events.ON_CHANGE, _editor, null);
-	}
 }

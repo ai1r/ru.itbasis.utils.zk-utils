@@ -6,11 +6,12 @@ import org.zkoss.util.resource.Labels;
 import org.zkoss.zhtml.I;
 import org.zkoss.zul.Listcell;
 
+// TODO Задокументировать
 public class CellFlag extends Listcell {
 	private transient static final Logger LOG = LoggerFactory.getLogger(CellFlag.class.getName());
 
-	private static final String ZCLASS_CHECKED   = "z-icon-check-square-o";
-	private static final String ZCLASS_UNCHECKED = "z-icon-square-o";
+	public static final String ZCLASS_CHECKED   = "z-icon-check-square-o";
+	public static final String ZCLASS_UNCHECKED = "z-icon-square-o";
 
 	private I      tagI;
 	private String prefixLabel;

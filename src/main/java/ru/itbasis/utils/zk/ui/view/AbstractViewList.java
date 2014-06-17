@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.zkoss.text.DateFormats;
 import org.zkoss.zhtml.Text;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Listbox;
@@ -26,6 +27,12 @@ abstract public class AbstractViewList extends AbstractView {
 	protected void initLayoutCenterChild() {
 		_list = initList(getCenter());
 		initHeaders();
+	}
+
+	@Override
+	public void onPageAttached(Page newpage, Page oldpage) {
+		super.onPageAttached(newpage, oldpage);
+		loadData();
 	}
 
 	protected Listbox initList(Component parent) {

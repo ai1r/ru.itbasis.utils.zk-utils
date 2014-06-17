@@ -14,8 +14,15 @@ import java.lang.reflect.Constructor;
 public class OpenDialogListener implements EventListener<Event> {
 	private transient static final Logger LOG = LoggerFactory.getLogger(OpenDialogListener.class.getName());
 
+	public static final String LABEL_MSG_UNDER_CONSTRUCTION       = "msg.underConstruction";
+	public static final String LABEL_MSG_UNDER_CONSTRUCTION_TITLE = "msg.underConstruction.title";
+
 	private Class   clazz;
 	private boolean flagUnderConstruction;
+
+	public static OpenDialogListener underConstruction(Object o) {
+		return underConstruction(o.getClass());
+	}
 
 	public static OpenDialogListener underConstruction(Class clazz) {
 		LOG.warn("init underConstruction for class: {}", clazz);
@@ -33,10 +40,10 @@ public class OpenDialogListener implements EventListener<Event> {
 	public void onEvent(Event event) throws Exception {
 		LOG.debug("clazz: {}", clazz);
 		if (flagUnderConstruction) {
-			final String msg = Labels.getLabel("msg.underConstruction",
+			final String msg = Labels.getLabel(LABEL_MSG_UNDER_CONSTRUCTION,
 			                                   "under construction...\\n\\n{0}",
 			                                   new Object[]{clazz.getName()});
-			final String title = Labels.getLabel("msg.underConstruction.title", "Разработка");
+			final String title = Labels.getLabel(LABEL_MSG_UNDER_CONSTRUCTION_TITLE, "In developing...");
 			Messagebox.show(msg, title, Messagebox.OK, Messagebox.EXCLAMATION);
 			return;
 		}

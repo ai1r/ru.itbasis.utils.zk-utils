@@ -15,26 +15,21 @@ public class FieldId extends AbstractField<Long> {
 
 	public FieldId(Long id) {
 		this();
-		setValue(id);
+		setRawValue(id);
 	}
 
 	@Override
-	public Long getValue() {
+	public Long getRawValue() {
 		return id;
 	}
 
 	@Override
-	public void setValue(Long id) {
+	public void setRawValue(Long id) {
 		this.id = id;
 		if (id != null && id > 0) {
 			label.setValue(Long.toString(id));
 		} else {
-			clear();
+			label.setValue("");
 		}
-	}
-
-	@Override
-	public void clear() {
-		label.setValue("");
 	}
 }

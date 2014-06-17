@@ -8,41 +8,28 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.ConventionWires;
-import org.zkoss.zul.Box;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Hbox;
+import ru.itbasis.utils.zk.IThis;
 
-abstract public class AbstractField<T> extends AbstractComponent {
+abstract public class AbstractField<T> extends AbstractComponent implements IField<T>, IThis<AbstractField> {
 	private transient static final Logger LOG = LoggerFactory.getLogger(AbstractField.class.getName());
-
-	public static final String ICON_NEW     = "z-icon-plus";
-	public static final String ICON_EDIT    = "z-icon-pencil";
-	public static final String ICON_REFRESH = "z-icon-refresh";
-
-	public static final String DEFAULT_WIDTH = "98%";
-	public static final String DEFAULT_HFLEX = "1";
-
-	public static final String CONSTRAINT_NOEMPTY         = "no empty,end_after";
-	public static final String CONSTRAINT_NUMBER_POSITIVE = "no negative,no zero,end_after";
-
-	protected AbstractComponent _this;
 
 	private HtmlBasedComponent box;
 
-	protected AbstractField() {
-		_this = this;
+	static {
+//		addClientEvent(InputElement.class, Events.ON_CHANGE, CE_IMPORTANT | CE_REPEAT_IGNORE);
+//		addClientEvent(InputElement.class, Events.ON_CHANGING, CE_DUPLICATE_IGNORE);
+//		addClientEvent(InputElement.class, Events.ON_ERROR, CE_DUPLICATE_IGNORE | CE_IMPORTANT);
+	}
+
+	public AbstractField() {
 		ConventionWires.wireVariables(this, this);
-		box = initBox();
 	}
 
-	protected HtmlBasedComponent initBox() {
-		Box box = new Hbox();
-		box.setHflex(DEFAULT_WIDTH);
-		return box;
-	}
-
-	public HtmlBasedComponent getBox() {
-		return box;
+	public AbstractField(EventListener<Event> listener) {
+		this();
+		this.addEventListener(Events.ON_CHANGE, listener);
 	}
 
 	@SuppressWarnings("unused")
@@ -52,7 +39,7 @@ abstract public class AbstractField<T> extends AbstractComponent {
 		if (listener != null) {
 			action.addEventListener(Events.ON_CLICK, listener);
 		}
-		action.setParent(box);
+		action.setParent(getBox());
 		return action;
 	}
 
@@ -63,7 +50,7 @@ abstract public class AbstractField<T> extends AbstractComponent {
 		if (listener != null) {
 			action.addEventListener(Events.ON_CLICK, listener);
 		}
-		action.setParent(box);
+		action.setParent(getBox());
 		return action;
 	}
 
@@ -74,14 +61,33 @@ abstract public class AbstractField<T> extends AbstractComponent {
 		if (listener != null) {
 			action.addEventListener(Events.ON_CLICK, listener);
 		}
-		action.setParent(box);
+		action.setParent(getBox());
 		return action;
 	}
 
+	public HtmlBasedComponent getBox() {
+		if (box == null) {
+			initBox();
+		}
+		return box;
+	}
+
+	@Deprecated
+	public final T getValue() {
+		return getRawValue();
+	}
+
 	@SuppressWarnings("unused")
-	public void setVisibleRow(boolean flag) {
-		LOG.trace("box: {}", box);
-		box.getParent().getParent().setVisible(flag);
+	@Deprecated
+	public final void setValue(T value) {
+		setRawValue(value);
+		Events.postEvent(Events.ON_CHANGE, getThis(), getRawValue());
+	}
+
+	protected HtmlBasedComponent initBox() {
+		box = new Hbox();
+		box.setHflex(DEFAULT_WIDTH);
+		return box;
 	}
 
 	@SuppressWarnings("unused")
@@ -90,11 +96,16 @@ abstract public class AbstractField<T> extends AbstractComponent {
 	}
 
 	@SuppressWarnings("unused")
-	abstract public T getValue();
+	public void setVisibleRow(boolean flag) {
+		LOG.trace("box: {}", box);
+		box.getParent().getParent().setVisible(flag);
+	}
 
-	@SuppressWarnings("unused")
-	abstract public void setValue(T value);
+	public class Event$Default$OnChange implements EventListener<Event> {
+		@Override
+		public void onEvent(Event event) throws Exception {
+			Events.postEvent(Events.ON_CHANGE, getThis(), getRawValue());
+		}
+	}
 
-	@SuppressWarnings("unused")
-	abstract public void clear();
 }

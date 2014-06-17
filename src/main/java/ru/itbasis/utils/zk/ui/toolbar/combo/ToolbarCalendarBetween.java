@@ -67,6 +67,8 @@ public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> 
 	}
 
 	private class Event$Apply$OnClick implements EventListener<Event> {
+		public static final String MSG_ERROR_DATE_BEETWEN_START_AFTER_END = "err.date.beetwen.startAfterEnd";
+
 		@Override
 		public void onEvent(Event event) throws Exception {
 			LOG.trace(LogMsg.EVENT, event);
@@ -77,7 +79,7 @@ public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> 
 
 			if (!t.isValid()) {
 				// TODO Вынести labels в метод
-				throw new WrongValueException(btnApply, Labels.getRequiredLabel("err.date.beetwen.startAfterEnd"));
+				throw new WrongValueException(btnApply, Labels.getRequiredLabel(MSG_ERROR_DATE_BEETWEN_START_AFTER_END));
 			}
 			getDropdown().close();
 			setFilter(t);

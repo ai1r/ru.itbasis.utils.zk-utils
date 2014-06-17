@@ -10,41 +10,41 @@ public class BetweenCalendar {
 	private Calendar end;
 
 	public BetweenCalendar() {
-		Calendar c = Calendar.getInstance();
-		setStart(DateUtils.getFirstDay(c));
-		setEnd(DateUtils.getLastDay(c));
+		final Calendar c = Calendar.getInstance();
+		this.setStart(DateUtils.getFirstDay(c));
+		this.setEnd(DateUtils.getLastDay(c));
 	}
 
-	public BetweenCalendar(Calendar start, Calendar end) {
-		setStart(start);
-		setEnd(end);
+	public BetweenCalendar(final Calendar start, final Calendar end) {
+		this.setStart(start);
+		this.setEnd(end);
 	}
 
 	@Override
 	public String toString() {
 		final ToStringBuilder builder = new ToStringBuilder(this);
-		builder.append("start", start != null ? start.getTimeInMillis() : null);
-		builder.append("end", end != null ? end.getTimeInMillis() : null);
+		builder.append("start", this.start != null ? this.start.getTimeInMillis() : null);
+		builder.append("end", this.end != null ? this.end.getTimeInMillis() : null);
 		return builder.toString();
 	}
 
 	public boolean isValid() {
-		return DateUtils.truncatedCompareTo(start, end, Calendar.DAY_OF_MONTH) <= 0;
+		return DateUtils.truncatedCompareTo(this.start, this.end, Calendar.DAY_OF_MONTH) <= 0;
 	}
 
 	public Calendar getStart() {
-		return start;
+		return this.start;
 	}
 
-	public void setStart(Calendar start) {
+	public void setStart(final Calendar start) {
 		this.start = start;
 	}
 
 	public Calendar getEnd() {
-		return end;
+		return this.end;
 	}
 
-	public void setEnd(Calendar end) {
+	public void setEnd(final Calendar end) {
 		this.end = end;
 	}
 }

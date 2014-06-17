@@ -1,5 +1,6 @@
 package ru.itbasis.utils.zk.ui.view;
 
+import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.ConventionWires;
@@ -19,11 +20,14 @@ abstract public class AbstractView extends Borderlayout {
 	protected ToolbarButton actionEdit;
 
 	public AbstractView() {
-		setVflex("1");
-
 		ConventionWires.wireVariables(this, this);
 		ConventionWires.addForwards(this, this);
+	}
 
+	@Override
+	public void onPageAttached(Page newpage, Page oldpage) {
+		super.onPageAttached(newpage, oldpage);
+		setVflex("1");
 		initLayoutNorth();
 		initLayoutCenter();
 	}
@@ -55,7 +59,7 @@ abstract public class AbstractView extends Borderlayout {
 	}
 
 	protected ToolbarButton appendActionAdd(String label, EventListener<Event> listener) {
-		actionAdd = new ToolbarButton(_toolbar, label, listener);
+		actionAdd = new ToolbarButton(_toolbar).setLabelResource(label).addClickListener(listener);
 		return actionAdd;
 	}
 
@@ -64,7 +68,7 @@ abstract public class AbstractView extends Borderlayout {
 	}
 
 	protected ToolbarButton appendActionEdit(String label, EventListener<Event> listener) {
-		actionEdit = new ToolbarButton(_toolbar, label, listener);
+		actionEdit = new ToolbarButton(_toolbar).setLabelResource(label).addClickListener(listener);
 		actionEdit.setDisabled(true);
 		return actionEdit;
 	}

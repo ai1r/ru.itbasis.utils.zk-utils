@@ -8,7 +8,6 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.*;
-import ru.itbasis.utils.zk.LogMsg;
 
 public class ToolbarCombo extends Combobutton {
 	private transient static final Logger LOG = LoggerFactory.getLogger(ToolbarCombo.class.getName());
@@ -63,8 +62,7 @@ public class ToolbarCombo extends Combobutton {
 	private class Event$OnClick implements EventListener<Event> {
 		@Override
 		public void onEvent(Event event) throws Exception {
-			Combobutton cb = (Combobutton) event.getTarget();
-			cb.open();
+			((Combobutton) event.getTarget()).open();
 		}
 	}
 }

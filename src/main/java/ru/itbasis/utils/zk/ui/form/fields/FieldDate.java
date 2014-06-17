@@ -16,31 +16,25 @@ public class FieldDate extends AbstractField<Calendar> {
 		_date = new Datebox();
 		_date.setHflex(DEFAULT_HFLEX);
 		_date.setParent(getBox());
+		_date.addEventListener(Events.ON_CHANGE, new Event$Default$OnChange());
 	}
 
 	public FieldDate(EventListener<Event> listener) {
-		this();
-		_date.addEventListener(Events.ON_CHANGE, listener);
+		super(listener);
 	}
 
 	@Override
-	public void clear() {
-		_date.setValue(null);
+	public Calendar getRawValue() {
+		return DateUtils.toCalendar(_date.getValue());
 	}
 
 	@Override
-	public void setValue(Calendar value) {
+	public void setRawValue(Calendar value) {
 		if (value != null) {
 			_date.setValue(value.getTime());
 		} else {
-			clear();
+			_date.setValue(null);
 		}
-		Events.postEvent(Events.ON_CHANGE, _date, value);
-	}
-
-	@Override
-	public Calendar getValue() {
-		return DateUtils.toCalendar(_date.getValue());
 	}
 
 }

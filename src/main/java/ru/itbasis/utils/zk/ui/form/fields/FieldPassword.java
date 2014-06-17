@@ -9,8 +9,8 @@ public class FieldPassword extends FieldText {
 	}
 
 	@Override
-	public String getValue() {
-		String value = super.getValue();
+	public String getRawValue() {
+		String value = super.getRawValue();
 		if (value == null) {
 			return "";
 		}

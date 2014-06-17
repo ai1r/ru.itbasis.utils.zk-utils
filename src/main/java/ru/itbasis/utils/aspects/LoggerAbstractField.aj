@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
 public class LoggerAbstractField {
 	private transient static final Logger LOG = LoggerFactory.getLogger(LoggerAbstractField.class.getName());
 
-	@Pointcut("execution(* *.setValue(..)) && this(ru.itbasis.utils.zk.ui.form.fields.AbstractField)")
+	@Pointcut("execution(* *.setValue*(..)) && this(ru.itbasis.utils.zk.ui.form.fields.AbstractField)")
 	protected void setValue() {
 	}
 
@@ -23,7 +23,7 @@ public class LoggerAbstractField {
 	public Object logSetValue(ProceedingJoinPoint joinPoint) throws Throwable {
 		if (LOG.isTraceEnabled()) {
 			final Signature sig = joinPoint.getSignature();
-			Field field = sig.getDeclaringType().getDeclaredField("value");
+			Field field = sig.getDeclaringType().getDeclaredFields()[0];
 			LOG.trace("value: {}", field);
 		}
 		return joinPoint.proceed();

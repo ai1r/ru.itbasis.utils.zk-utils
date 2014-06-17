@@ -1,8 +1,9 @@
 package ru.itbasis.utils.zk.ui.form.fields;
 
-import org.zkoss.util.resource.Labels;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Combobutton;
 
+@Deprecated
 abstract public class AbstractFieldCombo<T> extends AbstractField<T> {
 	protected Combobutton _combo;
 
@@ -15,18 +16,13 @@ abstract public class AbstractFieldCombo<T> extends AbstractField<T> {
 //		_combo.setHflex(DEFAULT_HFLEX);
 //		_combo.setWidth(DEFAULT_WIDTH);
 		_combo.setParent(getBox());
+		getThis().addEventListener(Events.ON_CHANGE, new Event$Default$OnChange());
 		initPopup();
 	}
 
 	@Override
-	public T getValue() {
+	public T getRawValue() {
 		return _item;
-	}
-
-	@Override
-	public void clear() {
-		_combo.setLabel(Labels.getLabel("empty.combo"));
-		_item = null;
 	}
 
 	abstract protected void initPopup();

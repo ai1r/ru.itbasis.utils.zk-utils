@@ -22,7 +22,7 @@ public class LoggerEventListener {
 	public Object logEvent(ProceedingJoinPoint joinPoint) throws Throwable {
 		if (LOG.isTraceEnabled()) {
 			final Signature sig = joinPoint.getSignature();
-			Field field = sig.getDeclaringType().getDeclaredField("event");
+			Field field = sig.getDeclaringType().getDeclaredFields()[0];
 			LOG.trace("method: '{}', event: {}", sig.getName(), field);
 		}
 		return joinPoint.proceed();
