@@ -8,13 +8,13 @@ import org.zkoss.zul.Listcell;
 
 // TODO Задокументировать
 public class CellFlag extends Listcell {
-	private transient static final Logger LOG = LoggerFactory.getLogger(CellFlag.class.getName());
-
 	public static final String ZCLASS_CHECKED   = "z-icon-check-square-o";
 	public static final String ZCLASS_UNCHECKED = "z-icon-square-o";
 
+	private static final transient Logger LOG = LoggerFactory.getLogger(CellFlag.class.getName());
+
 	private I      tagI;
-	private String prefixLabel;
+	private String _prefixLabel;
 
 	public CellFlag() {
 		this(false, null);
@@ -28,7 +28,7 @@ public class CellFlag extends Listcell {
 		LOG.debug("checked: {}, prefixLabel: {}", checked, prefixLabel);
 
 		tagI = new I();
-		this.prefixLabel = prefixLabel;
+		this._prefixLabel = prefixLabel;
 		if (checked) {
 			makeIcon(ZCLASS_CHECKED);
 		} else {
@@ -41,9 +41,9 @@ public class CellFlag extends Listcell {
 	private void makeIcon(final String defZclass) {
 		String title = "";
 		String zclass = defZclass;
-		if (prefixLabel != null && !prefixLabel.trim().isEmpty()) {
-			title = Labels.getLabel(prefixLabel, "");
-			zclass = Labels.getLabel(prefixLabel + ".zclass", defZclass);
+		if (_prefixLabel != null && !_prefixLabel.trim().isEmpty()) {
+			title = Labels.getLabel(_prefixLabel, "");
+			zclass = Labels.getLabel(_prefixLabel + ".zclass", defZclass);
 		}
 		LOG.trace("title: {}", title);
 		LOG.trace("zclass: {}", zclass);

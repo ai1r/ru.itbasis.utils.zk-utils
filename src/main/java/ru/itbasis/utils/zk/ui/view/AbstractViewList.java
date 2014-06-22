@@ -18,10 +18,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-abstract public class AbstractViewList extends AbstractView {
-	private transient static final Logger LOG = LoggerFactory.getLogger(AbstractViewList.class.getName());
+public abstract class AbstractViewList extends AbstractView {
+	private static final transient Logger LOG = LoggerFactory.getLogger(AbstractViewList.class.getName());
 
 	protected Listbox _list;
+
+	protected abstract void initHeaders();
+
+	protected abstract void loadData();
 
 	@Override
 	protected void initLayoutCenterChild() {
@@ -30,13 +34,13 @@ abstract public class AbstractViewList extends AbstractView {
 	}
 
 	@Override
-	public void onPageAttached(Page newpage, Page oldpage) {
+	public void onPageAttached(final Page newpage, final Page oldpage) {
 		super.onPageAttached(newpage, oldpage);
 		loadData();
 	}
 
-	protected Listbox initList(Component parent) {
-		Listbox list = new Listbox();
+	protected Listbox initList(final Component parent) {
+		final Listbox list = new Listbox();
 		list.setParent(parent);
 		list.setVflex(DEFAULT_VFLEX);
 		list.setAutopaging(true);
@@ -45,11 +49,7 @@ abstract public class AbstractViewList extends AbstractView {
 		return list;
 	}
 
-	abstract protected void initHeaders();
-
-	abstract protected void loadData();
-
-	abstract public class AbstractListitemRenderer<T> implements ListitemRenderer<T> {
+	public abstract class AbstractListitemRenderer<T> implements ListitemRenderer<T> {
 		protected SimpleDateFormat sdfDT;
 		protected SimpleDateFormat sdfD;
 
@@ -58,21 +58,8 @@ abstract public class AbstractViewList extends AbstractView {
 			sdfDT = new SimpleDateFormat(DateFormats.getDateTimeFormat(DateFormat.SHORT, DateFormat.SHORT, null, null));
 		}
 
-		/**
-		 * @param prefixLabel If != "" then zclass=prefixLabel+".zclass"
-		 */
-		protected Listcell cellFlag(Boolean flag, String prefixLabel) {
-			LOG.trace("flag: {}, prefixLabel: {}", flag, prefixLabel);
-			return new CellFlag(flag, prefixLabel);
-		}
-
-		protected Listcell cellFlag(Boolean flag) {
-			LOG.trace("flag: {}", flag);
-			return new CellFlag(flag);
-		}
-
-		protected Listcell cellDate(Calendar calendar) {
-			Listcell cell = new Listcell();
+		protected Listcell cellDate(final Calendar calendar) {
+			final Listcell cell = new Listcell();
 			if (null == calendar) {
 				return cell;
 			}
@@ -85,8 +72,8 @@ abstract public class AbstractViewList extends AbstractView {
 			return cell;
 		}
 
-		protected Listcell cellDateTime(Calendar calendar) {
-			Listcell cell = new Listcell();
+		protected Listcell cellDateTime(final Calendar calendar) {
+			final Listcell cell = new Listcell();
 			if (null == calendar) {
 				return cell;
 			}
@@ -99,24 +86,37 @@ abstract public class AbstractViewList extends AbstractView {
 			return cell;
 		}
 
-	}
-
-	public class Event$Listitem$OnClick implements EventListener<Event> {
-		@Override
-		public void onEvent(Event event) throws Exception {
-			if (actionEdit != null) {
-				actionEdit.setDisabled(false);
-			}
+		/**
+		 * @param prefixLabel If != "" then zclass=prefixLabel+".zclass"
+		 */
+		protected Listcell cellFlag(final Boolean flag, final String prefixLabel) {
+			LOG.trace("flag: {}, prefixLabel: {}", flag, prefixLabel);
+			return new CellFlag(flag, prefixLabel);
 		}
+
+		protected Listcell cellFlag(final Boolean flag) {
+			LOG.trace("flag: {}", flag);
+			return new CellFlag(flag);
+		}
+
 	}
 
 	public class Event$List$Refresh implements EventListener<Event> {
 		@Override
-		public void onEvent(Event event) throws Exception {
+		public void onEvent(final Event event) throws Exception {
 			if (actionEdit != null) {
 				actionEdit.setDisabled(true);
 			}
 			loadData();
+		}
+	}
+
+	public class Event$Listitem$OnClick implements EventListener<Event> {
+		@Override
+		public void onEvent(final Event event) throws Exception {
+			if (actionEdit != null) {
+				actionEdit.setDisabled(false);
+			}
 		}
 	}
 }

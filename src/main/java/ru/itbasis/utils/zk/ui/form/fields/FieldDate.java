@@ -19,7 +19,7 @@ public class FieldDate extends AbstractField<Calendar> {
 		_date.addEventListener(Events.ON_CHANGE, new Event$Default$OnChange());
 	}
 
-	public FieldDate(EventListener<Event> listener) {
+	public FieldDate(final EventListener<Event> listener) {
 		super(listener);
 	}
 
@@ -29,7 +29,7 @@ public class FieldDate extends AbstractField<Calendar> {
 	}
 
 	@Override
-	public void setRawValue(Calendar value) {
+	public void setRawValue(final Calendar value) {
 		if (value != null) {
 			_date.setValue(value.getTime());
 		} else {

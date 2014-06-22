@@ -10,7 +10,7 @@ import org.zkoss.zul.North;
 import org.zkoss.zul.Toolbar;
 import ru.itbasis.utils.zk.ui.toolbar.ToolbarButton;
 
-abstract public class AbstractView extends Borderlayout {
+public abstract class AbstractView extends Borderlayout {
 	public static final String DEFAULT_VFLEX = "1";
 	public static final String DEFAULT_HFLEX = "1";
 
@@ -24,16 +24,38 @@ abstract public class AbstractView extends Borderlayout {
 		ConventionWires.addForwards(this, this);
 	}
 
-	@Override
-	public void onPageAttached(Page newpage, Page oldpage) {
-		super.onPageAttached(newpage, oldpage);
-		setVflex("1");
-		initLayoutNorth();
-		initLayoutCenter();
+	protected abstract void initLayoutCenterChild();
+
+	protected abstract void initToolbar();
+
+	protected ToolbarButton appendActionAdd(final EventListener<Event> listener) {
+		return appendActionAdd("view.action.add", listener);
+	}
+
+	protected ToolbarButton appendActionAdd(final String label, final EventListener<Event> listener) {
+		actionAdd = new ToolbarButton(_toolbar).setLabelResource(label).addClickListener(listener);
+		return actionAdd;
+	}
+
+	protected ToolbarButton appendActionEdit(final EventListener<Event> listener) {
+		return appendActionEdit("view.action.edit", listener);
+	}
+
+	protected ToolbarButton appendActionEdit(final String label, final EventListener<Event> listener) {
+		actionEdit = new ToolbarButton(_toolbar).setLabelResource(label).addClickListener(listener);
+		actionEdit.setDisabled(true);
+		return actionEdit;
+	}
+
+	protected void initLayoutCenter() {
+		final Center center = new Center();
+		center.setBorder("true");
+		center.setParent(this);
+		initLayoutCenterChild();
 	}
 
 	protected void initLayoutNorth() {
-		North north = new North();
+		final North north = new North();
 		north.setBorder("none");
 		north.setParent(this);
 
@@ -43,34 +65,12 @@ abstract public class AbstractView extends Borderlayout {
 		initToolbar();
 	}
 
-	protected void initLayoutCenter() {
-		Center center = new Center();
-		center.setBorder("true");
-		center.setParent(this);
-		initLayoutCenterChild();
-	}
-
-	abstract protected void initLayoutCenterChild();
-
-	abstract protected void initToolbar();
-
-	protected ToolbarButton appendActionAdd(EventListener<Event> listener) {
-		return appendActionAdd("view.action.add", listener);
-	}
-
-	protected ToolbarButton appendActionAdd(String label, EventListener<Event> listener) {
-		actionAdd = new ToolbarButton(_toolbar).setLabelResource(label).addClickListener(listener);
-		return actionAdd;
-	}
-
-	protected ToolbarButton appendActionEdit(EventListener<Event> listener) {
-		return appendActionEdit("view.action.edit", listener);
-	}
-
-	protected ToolbarButton appendActionEdit(String label, EventListener<Event> listener) {
-		actionEdit = new ToolbarButton(_toolbar).setLabelResource(label).addClickListener(listener);
-		actionEdit.setDisabled(true);
-		return actionEdit;
+	@Override
+	public void onPageAttached(final Page newpage, final Page oldpage) {
+		super.onPageAttached(newpage, oldpage);
+		setVflex(DEFAULT_VFLEX);
+		initLayoutNorth();
+		initLayoutCenter();
 	}
 
 }

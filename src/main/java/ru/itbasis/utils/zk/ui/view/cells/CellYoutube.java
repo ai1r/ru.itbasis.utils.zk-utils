@@ -11,11 +11,11 @@ import org.zkoss.zul.Listcell;
 import ru.itbasis.utils.zk.ui.dialog.preview.YoutubePreview;
 
 public class CellYoutube extends Listcell {
-	private transient static final Logger LOG = LoggerFactory.getLogger(CellYoutube.class.getName());
+	private static final transient Logger LOG = LoggerFactory.getLogger(CellYoutube.class.getName());
 
 	private I tagI;
 
-	public CellYoutube(String code) {
+	public CellYoutube(final String code) {
 		LOG.debug("code: {}", code);
 
 		final Label label = new Label(code);
@@ -30,12 +30,12 @@ public class CellYoutube extends Listcell {
 	private class Event$Preview implements EventListener<Event> {
 		private String code;
 
-		public Event$Preview(String code) {
-			this.code = code;
+		public Event$Preview(final String value) {
+			this.code = value;
 		}
 
 		@Override
-		public void onEvent(Event event) throws Exception {
+		public void onEvent(final Event event) throws Exception {
 			new YoutubePreview(event.getPage(), code).doModal();
 		}
 	}

@@ -12,8 +12,11 @@
 **/.idea/copyright/
 **/.idea/inspectionProfiles/
 **/.idea/dataSources.ids
+**/.idea/dataSources.xml
 **/.idea/dictionaries/
-**/qaplug_*.xml
+**/.idea/qaplug_*.xml
+**/.idea/checkstyle-idea.xml
+**/.idea/codeStyleSettings.xml
 *.ipr
 *.iml
 *.iws
@@ -29,4 +32,4 @@
 **/.classpath
 **/.settings
 **/.checkstyle
-checkstyle.xml
+**/test/tmp_out/

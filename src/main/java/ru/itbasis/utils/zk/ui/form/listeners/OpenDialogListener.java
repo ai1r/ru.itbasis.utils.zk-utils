@@ -12,32 +12,32 @@ import org.zkoss.zul.Window;
 import java.lang.reflect.Constructor;
 
 public class OpenDialogListener implements EventListener<Event> {
-	private transient static final Logger LOG = LoggerFactory.getLogger(OpenDialogListener.class.getName());
-
 	public static final String LABEL_MSG_UNDER_CONSTRUCTION       = "msg.underConstruction";
 	public static final String LABEL_MSG_UNDER_CONSTRUCTION_TITLE = "msg.underConstruction.title";
+
+	private static final transient Logger LOG = LoggerFactory.getLogger(OpenDialogListener.class.getName());
 
 	private Class   clazz;
 	private boolean flagUnderConstruction;
 
-	public static OpenDialogListener underConstruction(Object o) {
+	public OpenDialogListener(final Class value) {
+		this.clazz = value;
+	}
+
+	public static OpenDialogListener underConstruction(final Object o) {
 		return underConstruction(o.getClass());
 	}
 
-	public static OpenDialogListener underConstruction(Class clazz) {
+	public static OpenDialogListener underConstruction(final Class clazz) {
 		LOG.warn("init underConstruction for class: {}", clazz);
-		OpenDialogListener listener = new OpenDialogListener(clazz);
+		final OpenDialogListener listener = new OpenDialogListener(clazz);
 		listener.flagUnderConstruction = true;
 		return listener;
 	}
 
-	public OpenDialogListener(Class clazz) {
-		this.clazz = clazz;
-	}
-
 	@Override
 	@SuppressWarnings("unchecked")
-	public void onEvent(Event event) throws Exception {
+	public void onEvent(final Event event) throws Exception {
 		LOG.debug("clazz: {}", clazz);
 		if (flagUnderConstruction) {
 			final String msg = Labels.getLabel(LABEL_MSG_UNDER_CONSTRUCTION,
@@ -49,7 +49,7 @@ public class OpenDialogListener implements EventListener<Event> {
 		}
 		Window window;
 		try {
-			Constructor constructor = clazz.getConstructor(Page.class);
+			final Constructor constructor = clazz.getConstructor(Page.class);
 			window = (Window) constructor.newInstance(event.getPage());
 		} catch (NoSuchMethodException e) {
 			window = (Window) clazz.newInstance();

@@ -24,8 +24,6 @@
     </MavenSettings>
     <RunnerSettings RunnerId="Run" />
     <ConfigurationWrapper RunnerId="Run" />
-    <method>
-      <option name="Make" enabled="true" />
-    </method>
+    <method />
   </configuration>
 </component>

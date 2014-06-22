@@ -9,38 +9,43 @@ import ru.itbasis.utils.zk.LogMsg;
 import ru.itbasis.utils.zk.ui.AbstractDialog;
 import ru.itbasis.utils.zk.ui.toolbar.ToolbarButton;
 
-abstract public class AbstractDialogForm<T> extends AbstractDialog {
-	private transient static final Logger LOG                       = LoggerFactory.getLogger(AbstractDialogForm.class
-		                                                                                          .getName());
-	protected static final         String DEFAULT_BUTTON_SAVE_LABEL = "form.action.save";
+public abstract class AbstractDialogForm<T> extends AbstractDialog {
+	protected static final String DEFAULT_BUTTON_SAVE_LABEL = "form.action.save";
+
+	private static final transient Logger LOG = LoggerFactory.getLogger(AbstractDialogForm.class.getName());
 
 	protected T             _item;
 	protected ToolbarButton actionSave;
 
-	public AbstractDialogForm(Page page) {
+	public AbstractDialogForm(final Page page) {
 		this(page, null);
 	}
 
-	public AbstractDialogForm(Page page, T item) {
+	public AbstractDialogForm(final Page page, final T item) {
 		super(page);
 		initItem(item);
 	}
 
-	abstract protected void initItem();
+	protected abstract void initFormFields();
 
-	abstract protected void initFormFields();
+	protected abstract void initItem();
 
-	abstract protected void loadFieldData();
+	protected abstract void loadFieldData();
 
-	abstract protected void saveFieldData();
+	protected abstract void saveFieldData();
 
-	protected ToolbarButton appendActionSave(EventListener<Event> listener) {
+	protected ToolbarButton appendActionSave(final EventListener<Event> listener) {
 		return appendActionSave(DEFAULT_BUTTON_SAVE_LABEL, listener);
 	}
 
-	protected ToolbarButton appendActionSave(String label, EventListener<Event> listener) {
+	protected ToolbarButton appendActionSave(final String label, final EventListener<Event> listener) {
 		actionSave = new ToolbarButton(_toolbar).setLabelResource(label).addClickListener(listener);
 		return actionSave;
+	}
+
+	@Override
+	protected void initGridColumns() {
+		_grid.appendChild(new GridTwoColumn());
 	}
 
 	@Override
@@ -49,13 +54,8 @@ abstract public class AbstractDialogForm<T> extends AbstractDialog {
 		initFormFields();
 	}
 
-	@Override
-	protected void initGridColumns() {
-		_grid.appendChild(new GridTwoColumn());
-	}
-
 	@SuppressWarnings("unchecked")
-	protected void initItem(T item) {
+	protected void initItem(final T item) {
 		LOG.trace(LogMsg.VALUE, item);
 		_item = item;
 		initItem();

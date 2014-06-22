@@ -11,14 +11,26 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.ConventionWires;
-import org.zkoss.zul.*;
-import ru.itbasis.utils.zk.IThis;
+import org.zkoss.zul.Borderlayout;
+import org.zkoss.zul.Cell;
+import org.zkoss.zul.Center;
+import org.zkoss.zul.Column;
+import org.zkoss.zul.Columns;
+import org.zkoss.zul.Grid;
+import org.zkoss.zul.Label;
+import org.zkoss.zul.LayoutRegion;
+import org.zkoss.zul.North;
+import org.zkoss.zul.Row;
+import org.zkoss.zul.Rows;
+import org.zkoss.zul.Toolbar;
+import org.zkoss.zul.Vbox;
+import org.zkoss.zul.West;
+import org.zkoss.zul.Window;
+import ru.itbasis.utils.core.ISelf;
 import ru.itbasis.utils.zk.LogMsg;
 import ru.itbasis.utils.zk.ui.form.fields.AbstractField;
 
-abstract public class AbstractDialog extends Window implements IThis<AbstractDialog> {
-	private transient static final Logger LOG = LoggerFactory.getLogger(AbstractDialog.class.getName());
-
+public abstract class AbstractDialog extends Window implements ISelf<AbstractDialog> {
 	protected static final int    MIN_FORM_WIDTH             = 500;
 	protected static final int    MIN_FORM_HEIGHT            = 400;
 	protected static final int    MIN_PREVIEW_WIDTH          = 400;
@@ -26,12 +38,15 @@ abstract public class AbstractDialog extends Window implements IThis<AbstractDia
 	protected static final String DEFAULT_HFLEX              = "1";
 	protected static final String DEFAULT_COLUMN_LABEL_WIDTH = "35%";
 
+	private static final transient Logger LOG = LoggerFactory.getLogger(AbstractDialog.class.getName());
+
 	protected Borderlayout _layout;
 	protected Toolbar      _toolbar;
 	protected Grid         _grid;
-	private   boolean      enablePreview;
 
-	public AbstractDialog(Page page) {
+	private boolean enablePreview;
+
+	public AbstractDialog(final Page page) {
 		LOG.trace(LogMsg.PAGE, page);
 
 		setPage(page);
@@ -55,16 +70,16 @@ abstract public class AbstractDialog extends Window implements IThis<AbstractDia
 		initLayout();
 	}
 
-	abstract protected void initTitle();
+	protected abstract void initTitle();
 
-	abstract protected void initToolbar();
+	protected abstract void initToolbar();
 
-	protected Row appendFormRow(String fieldLabel, AbstractField fieldComp, EventListener<Event> listener) {
+	protected Row appendFormRow(final String fieldLabel, final AbstractField fieldComp, final EventListener<Event> listener) {
 		return appendFormRow(fieldLabel, fieldComp.getBox(), listener);
 	}
 
-	protected Row appendFormRow(String fieldLabel, HtmlBasedComponent fieldComp, EventListener<Event> listener) {
-		Row row = appendFormRow(fieldLabel, fieldComp);
+	protected Row appendFormRow(final String fieldLabel, final HtmlBasedComponent fieldComp, final EventListener<Event> listener) {
+		final Row row = appendFormRow(fieldLabel, fieldComp);
 		row.addEventListener(Events.ON_CLICK, listener);
 		return row;
 	}
@@ -78,7 +93,7 @@ abstract public class AbstractDialog extends Window implements IThis<AbstractDia
 			LOG.trace("fieldLabel: {}", fieldLabel);
 			LOG.trace("fieldComp: {}", fieldComp);
 		}
-		Row row = appendRow();
+		final Row row = appendRow();
 
 		new Label(Labels.getRequiredLabel(fieldLabel)).setParent(row);
 		fieldComp.setParent(row);
@@ -86,16 +101,16 @@ abstract public class AbstractDialog extends Window implements IThis<AbstractDia
 		return row;
 	}
 
-	protected Row appendRow(AbstractField field) {
+	protected Row appendRow(final AbstractField field) {
 		LOG.trace("field: {}", field);
 		return appendRow(field.getBox());
 	}
 
-	protected Row appendRow(HtmlBasedComponent comp) {
+	protected Row appendRow(final HtmlBasedComponent comp) {
 		LOG.trace("comp: {}", comp);
 		final Row row = appendRow();
 
-		Cell cell = new Cell();
+		final Cell cell = new Cell();
 		cell.setColspan(_grid.getColumns().getChildren().size());
 		cell.setParent(row);
 
@@ -122,7 +137,7 @@ abstract public class AbstractDialog extends Window implements IThis<AbstractDia
 		enablePreview = false;
 	}
 
-	public void enablePreview(boolean flag) {
+	public void enablePreview(final boolean flag) {
 		if (flag) {
 			enablePreview(MIN_FORM_WIDTH);
 		} else {
@@ -130,7 +145,7 @@ abstract public class AbstractDialog extends Window implements IThis<AbstractDia
 		}
 	}
 
-	public void enablePreview(int formWidth) {
+	public void enablePreview(final int formWidth) {
 		West west = _layout.getWest();
 		if (west == null) {
 			west = new West();
@@ -174,7 +189,7 @@ abstract public class AbstractDialog extends Window implements IThis<AbstractDia
 	}
 
 	protected void initLayoutCenter() {
-		Center center = new Center();
+		final Center center = new Center();
 		center.setBorder("true");
 		center.setParent(_layout);
 
@@ -188,7 +203,7 @@ abstract public class AbstractDialog extends Window implements IThis<AbstractDia
 	}
 
 	protected void initLayoutNorth() {
-		North north = new North();
+		final North north = new North();
 		north.setBorder("none");
 		north.setParent(_layout);
 
@@ -201,17 +216,17 @@ abstract public class AbstractDialog extends Window implements IThis<AbstractDia
 		return enablePreview;
 	}
 
-	public void preview(Component comp) {
+	public void preview(final Component comp) {
 		if (_layout.getWest() == null) {
 			return;
 		}
-		Center infoBox = _layout.getCenter();
+		final Center infoBox = _layout.getCenter();
 		Components.removeAllChildren(infoBox);
 		if (comp != null) {
 			comp.setParent(infoBox);
 			return;
 		}
-		Vbox vbox = new Vbox();
+		final Vbox vbox = new Vbox();
 		vbox.setPack("center");
 		vbox.setAlign("center");
 		vbox.appendChild(new Label(Labels.getLabel("empty.exInfo")));
@@ -222,7 +237,7 @@ abstract public class AbstractDialog extends Window implements IThis<AbstractDia
 		public GridOneColumn() {
 			setVisible(false);
 
-			Column c0 = new Column();
+			final Column c0 = new Column();
 			c0.setParent(this);
 		}
 	}
@@ -231,12 +246,12 @@ abstract public class AbstractDialog extends Window implements IThis<AbstractDia
 		public GridTwoColumn() {
 			setVisible(false);
 
-			Column c0 = new Column();
+			final Column c0 = new Column();
 			c0.setAlign("right");
 			c0.setWidth(DEFAULT_COLUMN_LABEL_WIDTH);
 			c0.setParent(this);
 
-			Column c1 = new Column();
+			final Column c1 = new Column();
 			c1.setParent(this);
 		}
 	}

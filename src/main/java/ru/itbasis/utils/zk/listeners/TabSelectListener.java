@@ -10,11 +10,11 @@ import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabpanel;
 import ru.itbasis.utils.zk.ui.TabboxUtils;
 
-public class TabSelectListener implements EventListener {
-	private transient static final Logger LOG = LoggerFactory.getLogger(TabSelectListener.class.getName());
+public class TabSelectListener implements EventListener<Event> {
+	private static final transient Logger LOG = LoggerFactory.getLogger(TabSelectListener.class.getName());
 
 	@Override
-	public void onEvent(Event event) throws Exception {
+	public void onEvent(final Event event) throws Exception {
 		final Tab tab = (Tab) event.getTarget();
 
 		Clients.clearBusy(tab.getRoot());
@@ -25,12 +25,12 @@ public class TabSelectListener implements EventListener {
 
 		TabboxUtils.fixTabPanels(tab.getTabbox());
 
-		Tabpanel tabPanel = tab.getLinkedPanel();
+		final Tabpanel tabPanel = tab.getLinkedPanel();
 		if (tabPanel.getFirstChild() != null) {
 			return;
 		}
 
-		Component comp = TabboxUtils.getComp(pageUri);
+		final Component comp = TabboxUtils.getComp(pageUri);
 		LOG.trace("comp: {}", comp);
 		comp.setParent(tab.getLinkedPanel());
 

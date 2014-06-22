@@ -5,7 +5,7 @@ import ru.itbasis.utils.zk.DateUtils;
 
 import java.util.Calendar;
 
-public class BetweenCalendar {
+public final class BetweenCalendar {
 	private Calendar start;
 	private Calendar end;
 
@@ -13,11 +13,6 @@ public class BetweenCalendar {
 		final Calendar c = Calendar.getInstance();
 		this.setStart(DateUtils.getFirstDay(c));
 		this.setEnd(DateUtils.getLastDay(c));
-	}
-
-	public BetweenCalendar(final Calendar start, final Calendar end) {
-		this.setStart(start);
-		this.setEnd(end);
 	}
 
 	@Override
@@ -36,15 +31,17 @@ public class BetweenCalendar {
 		return this.start;
 	}
 
-	public void setStart(final Calendar start) {
-		this.start = start;
+	public BetweenCalendar setStart(final Calendar value) {
+		this.start = value;
+		return this;
 	}
 
 	public Calendar getEnd() {
 		return this.end;
 	}
 
-	public void setEnd(final Calendar end) {
-		this.end = end;
+	public BetweenCalendar setEnd(final Calendar value) {
+		this.end = value;
+		return this;
 	}
 }

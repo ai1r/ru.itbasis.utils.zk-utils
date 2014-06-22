@@ -6,9 +6,9 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Textbox;
 
 public class FieldText extends AbstractField<String> {
-	private transient static final Logger LOG = LoggerFactory.getLogger(FieldText.class.getName());
-
 	public static final int DEFAULT_ROWS = 3;
+
+	private static final transient Logger LOG = LoggerFactory.getLogger(FieldText.class.getName());
 
 	protected Textbox _text;
 
@@ -27,7 +27,7 @@ public class FieldText extends AbstractField<String> {
 	}
 
 	@Override
-	public void setRawValue(String value) {
+	public void setRawValue(final String value) {
 		if (value == null) {
 			_text.setRawValue("");
 			return;
@@ -39,12 +39,12 @@ public class FieldText extends AbstractField<String> {
 		return _text.getRows();
 	}
 
-	public void setRows(int value) {
+	public void setRows(final int value) {
 		assert value > 0;
 		_text.setRows(value);
 	}
 
-	public void setConstraint(String value) {
+	public void setConstraint(final String value) {
 		LOG.debug("constraint: {}", value);
 		_text.setConstraint(value);
 	}

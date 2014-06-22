@@ -10,7 +10,7 @@ public class FieldPassword extends FieldText {
 
 	@Override
 	public String getRawValue() {
-		String value = super.getRawValue();
+		final String value = super.getRawValue();
 		if (value == null) {
 			return "";
 		}

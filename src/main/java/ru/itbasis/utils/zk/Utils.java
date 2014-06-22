@@ -3,8 +3,8 @@ package ru.itbasis.utils.zk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-final public class Utils {
-	private transient static final Logger LOG = LoggerFactory.getLogger(Utils.class.getName());
+public final class Utils {
+	private static final transient Logger LOG = LoggerFactory.getLogger(Utils.class.getName());
 
 	private Utils() {
 	}

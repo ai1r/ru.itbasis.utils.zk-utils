@@ -6,12 +6,12 @@ import org.zkoss.zul.Auxheader;
 import org.zkoss.zul.Listbox;
 
 public class AbstractListAuxHeaders extends Auxhead {
-	public AbstractListAuxHeaders(Listbox list) {
+	public AbstractListAuxHeaders(final Listbox list) {
 		setParent(list);
 	}
 
-	public Auxheader addHeader(String label, int colspan) {
-		Auxheader header = new Auxheader();
+	public Auxheader addHeader(final String label, final int colspan) {
+		final Auxheader header = new Auxheader();
 		if (label != null && !label.trim().isEmpty()) {
 			header.setLabel(Labels.getRequiredLabel(label));
 		}

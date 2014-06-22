@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ru.itbasis.utils</groupId>
 	<artifactId>zk-utils</artifactId>
-	<version>2.0-SNAPSHOT</version>
+	<version>2.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>zk-utils</name>
@@ -130,22 +130,22 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<!--<plugin>-->
-				<!--<artifactId>maven-checkstyle-plugin</artifactId>-->
-				<!--<version>2.12.1</version>-->
-				<!--<executions>-->
-					<!--<execution>-->
-						<!--<phase>validate</phase>-->
-						<!--<goals>-->
-							<!--<goal>check</goal>-->
-						<!--</goals>-->
-						<!--<configuration>-->
-							<!--<configLocation>${project.basedir}/checkstyle.xml</configLocation>-->
-							<!--<encoding>${project.build.sourceEncoding}</encoding>-->
-						<!--</configuration>-->
-					<!--</execution>-->
-				<!--</executions>-->
-			<!--</plugin>-->
+			<plugin>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.12.1</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<configLocation>${project.basedir}/checkstyle.xml</configLocation>
+							<encoding>${project.build.sourceEncoding}</encoding>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<profiles>
@@ -185,8 +185,17 @@
 	</repositories>
 	<dependencies>
 		<dependency>
+			<groupId>ru.itbasis.utils</groupId>
+			<artifactId>core-utils</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
 		</dependency>
 
 		<dependency>
@@ -240,14 +249,24 @@
 			<artifactId>ckez</artifactId>
 		</dependency>
 
-
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>ru.itbasis.utils</groupId>
+				<artifactId>core-utils</artifactId>
+				<version>1.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
 				<version>3.3.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>4.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>

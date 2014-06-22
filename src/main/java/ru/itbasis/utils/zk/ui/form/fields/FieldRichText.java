@@ -17,13 +17,21 @@ public class FieldRichText extends AbstractField<String> {
 		_editor.addEventListener(Events.ON_CHANGE, new Event$Default$OnChange());
 	}
 
+	public Map<String, Object> getConfig() {
+		return _editor.getConfig();
+	}
+
+	public void setConfig(final Map<String, Object> config) {
+		_editor.setConfig(config);
+	}
+
 	@Override
 	public String getRawValue() {
 		return _editor.getValue();
 	}
 
 	@Override
-	public void setRawValue(String value) {
+	public void setRawValue(final String value) {
 		if (value == null) {
 			_editor.setValue("");
 			return;
@@ -31,15 +39,7 @@ public class FieldRichText extends AbstractField<String> {
 		_editor.setValue(value);
 	}
 
-	public Map<String, Object> getConfig() {
-		return _editor.getConfig();
-	}
-
-	public void setConfig(Map<String, Object> config) {
-		_editor.setConfig(config);
-	}
-
-	public void setConfigPath(String value) {
+	public void setConfigPath(final String value) {
 		_editor.setCustomConfigurationsPath(value);
 	}
 

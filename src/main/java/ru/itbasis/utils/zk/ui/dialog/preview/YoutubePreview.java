@@ -14,14 +14,14 @@ public class YoutubePreview extends Window {
 	private static final String DEFAULT_WIDTH  = "640px";
 	private static final String DEFAUTL_HEIGHT = "360px";
 
-	public YoutubePreview(Page page, String code) {
+	public YoutubePreview(final Page page, final String code) {
 		setPage(page);
 		setTitle(Labels.getLabel(LABEL_TITLE, "Youtube preview"));
 		setClosable(true);
 		setBorder(true);
 		setMode(Mode.MODAL);
 
-		Flash flash = new Flash("http://www.youtube.com/v/" + code);
+		final Flash flash = new Flash("http://www.youtube.com/v/" + code);
 		flash.setWidth(Labels.getLabel(LABEL_WIDTH, DEFAULT_WIDTH));
 		flash.setHeight(Labels.getLabel(LABEL_HEIGHT, DEFAUTL_HEIGHT));
 		flash.setParent(this);

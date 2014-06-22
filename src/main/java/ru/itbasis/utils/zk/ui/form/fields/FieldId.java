@@ -13,9 +13,9 @@ public class FieldId extends AbstractField<Long> {
 		label.setParent(getBox());
 	}
 
-	public FieldId(Long id) {
+	public FieldId(final Long value) {
 		this();
-		setRawValue(id);
+		setRawValue(value);
 	}
 
 	@Override
@@ -24,10 +24,10 @@ public class FieldId extends AbstractField<Long> {
 	}
 
 	@Override
-	public void setRawValue(Long id) {
-		this.id = id;
-		if (id != null && id > 0) {
-			label.setValue(Long.toString(id));
+	public void setRawValue(final Long value) {
+		this.id = value;
+		if (value != null && value > 0) {
+			label.setValue(Long.toString(value));
 		} else {
 			label.setValue("");
 		}

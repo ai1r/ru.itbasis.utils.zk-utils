@@ -8,9 +8,9 @@ import org.zkoss.zk.ui.event.OpenEvent;
 import org.zkoss.zk.ui.util.ConventionWires;
 import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Bandpopup;
-import ru.itbasis.utils.zk.IThis;
+import ru.itbasis.utils.core.ISelf;
 
-abstract public class AbstractComboField<T> extends Bandbox implements IThis<AbstractComboField>, IField<T> {
+public abstract class AbstractComboField<T> extends Bandbox implements ISelf<AbstractComboField>, IField<T> {
 	private static final transient Logger LOG = LoggerFactory.getLogger(AbstractComboField.class.getName());
 
 	protected T genericType;
@@ -26,9 +26,9 @@ abstract public class AbstractComboField<T> extends Bandbox implements IThis<Abs
 		this.addEventListener(Events.ON_OPEN, new Event$Popup$onOpen());
 	}
 
-	abstract protected String coerceToString(Object value);
+	protected abstract String coerceToString(final Object value);
 
-	abstract protected void initPopup();
+	protected abstract void initPopup();
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -40,19 +40,19 @@ abstract public class AbstractComboField<T> extends Bandbox implements IThis<Abs
 	}
 
 	@Override
-	public void setRawValue(Object value) {
+	public void setRawValue(final Object value) {
 		super.setRawValue(value);
-		Events.postEvent(Events.ON_CHANGE, getThis(), value);
+		Events.postEvent(Events.ON_CHANGE, getSelf(), value);
 	}
 
 	@Override
-	protected Object marshall(Object value) {
+	protected Object marshall(final Object value) {
 		return coerceToString(value);
 	}
 
 	private class Event$Popup$onOpen implements EventListener<OpenEvent> {
 		@Override
-		public void onEvent(OpenEvent event) throws Exception {
+		public void onEvent(final OpenEvent event) throws Exception {
 			if (!event.isOpen()) {
 				return;
 			}

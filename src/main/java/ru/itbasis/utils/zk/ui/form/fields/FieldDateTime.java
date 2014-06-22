@@ -16,7 +16,7 @@ public class FieldDateTime extends AbstractField<Calendar> {
 	public FieldDateTime() {
 		super();
 
-		EventListener<Event> listener = new Event$Default$OnChange();
+		final EventListener<Event> listener = new Event$Default$OnChange();
 
 		_date = new Datebox();
 		_date.setHflex(DEFAULT_HFLEX);
@@ -32,8 +32,8 @@ public class FieldDateTime extends AbstractField<Calendar> {
 
 	@Override
 	public Calendar getRawValue() {
-		Calendar calD = DateUtils.toCalendar(_date.getValue());
-		Calendar calT = DateUtils.toCalendar(_time.getValue());
+		final Calendar calD = DateUtils.toCalendar(_date.getValue());
+		final Calendar calT = DateUtils.toCalendar(_time.getValue());
 		calD.set(Calendar.HOUR, calT.get(Calendar.HOUR));
 		calD.set(Calendar.MINUTE, calT.get(Calendar.MINUTE));
 		calD.set(Calendar.SECOND, calT.get(Calendar.SECOND));
@@ -41,7 +41,7 @@ public class FieldDateTime extends AbstractField<Calendar> {
 	}
 
 	@Override
-	public void setRawValue(Calendar value) {
+	public void setRawValue(final Calendar value) {
 		if (value == null) {
 			_date.setValue(null);
 			_time.setValue(null);

@@ -4,7 +4,7 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Combobutton;
 
 @Deprecated
-abstract public class AbstractFieldCombo<T> extends AbstractField<T> {
+public abstract class AbstractFieldCombo<T> extends AbstractField<T> {
 	protected Combobutton _combo;
 
 	protected T _item;
@@ -16,7 +16,7 @@ abstract public class AbstractFieldCombo<T> extends AbstractField<T> {
 //		_combo.setHflex(DEFAULT_HFLEX);
 //		_combo.setWidth(DEFAULT_WIDTH);
 		_combo.setParent(getBox());
-		getThis().addEventListener(Events.ON_CHANGE, new Event$Default$OnChange());
+		getSelf().addEventListener(Events.ON_CHANGE, new Event$Default$OnChange());
 		initPopup();
 	}
 
@@ -25,5 +25,5 @@ abstract public class AbstractFieldCombo<T> extends AbstractField<T> {
 		return _item;
 	}
 
-	abstract protected void initPopup();
+	protected abstract void initPopup();
 }

@@ -7,41 +7,45 @@ import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
-import org.zkoss.zul.*;
+import org.zkoss.zul.Box;
+import org.zkoss.zul.Calendar;
+import org.zkoss.zul.Hbox;
+import org.zkoss.zul.Toolbar;
+import org.zkoss.zul.Vbox;
 import ru.itbasis.utils.zk.DateUtils;
 import ru.itbasis.utils.zk.LogMsg;
 import ru.itbasis.utils.zk.entity.BetweenCalendar;
 
 public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> {
-	private transient static final Logger LOG = LoggerFactory.getLogger(ToolbarCalendarBetween.class.getName());
+	private static final transient Logger LOG = LoggerFactory.getLogger(ToolbarCalendarBetween.class.getName());
 
 	private Calendar fieldStart;
 	private Calendar fieldEnd;
 
-	public ToolbarCalendarBetween(Toolbar parent) {
+	public ToolbarCalendarBetween(final Toolbar parent) {
 		super(parent);
 		setFilter(new BetweenCalendar());
 	}
 
-	public ToolbarCalendarBetween(Toolbar parent, String labelName) {
+	public ToolbarCalendarBetween(final Toolbar parent, final String labelName) {
 		super(parent, labelName);
 		setFilter(new BetweenCalendar());
 	}
 
-	public ToolbarCalendarBetween(Toolbar parent, String labelName, EventListener<Event> listener) {
+	public ToolbarCalendarBetween(final Toolbar parent, final String labelName, final EventListener<Event> listener) {
 		this(parent, labelName);
 		addEventListener(Events.ON_CHANGE, listener);
 	}
 
 	@Override
 	protected void initPopup() {
-		Box hbox = new Hbox();
+		final Box hbox = new Hbox();
 		fieldStart = new Calendar();
 		fieldStart.setParent(hbox);
 		fieldEnd = new Calendar();
 		fieldEnd.setParent(hbox);
 
-		Box vbox = new Vbox();
+		final Box vbox = new Vbox();
 		vbox.setParent(getDropdown());
 		vbox.appendChild(hbox);
 		vbox.setAlign("end");
@@ -52,7 +56,7 @@ public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> 
 	}
 
 	@Override
-	public void setFilter(BetweenCalendar value) {
+	public void setFilter(final BetweenCalendar value) {
 		super.setFilter(value);
 
 		fieldStart.setValue(value.getStart().getTime());
@@ -70,12 +74,12 @@ public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> 
 		public static final String MSG_ERROR_DATE_BEETWEN_START_AFTER_END = "err.date.beetwen.startAfterEnd";
 
 		@Override
-		public void onEvent(Event event) throws Exception {
+		public void onEvent(final Event event) throws Exception {
 			LOG.trace(LogMsg.EVENT, event);
 
 			final java.util.Calendar start = DateUtils.toCalendar(fieldStart.getValue());
 			final java.util.Calendar end = DateUtils.toCalendar(fieldEnd.getValue());
-			BetweenCalendar t = new BetweenCalendar(start, end);
+			final BetweenCalendar t = new BetweenCalendar().setStart(start).setEnd(end);
 
 			if (!t.isValid()) {
 				// TODO Вынести labels в метод
@@ -88,7 +92,7 @@ public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> 
 
 	private class Event$OnOpen implements EventListener<Event> {
 		@Override
-		public void onEvent(Event event) throws Exception {
+		public void onEvent(final Event event) throws Exception {
 			fieldStart.setValue(filter.getStart().getTime());
 			fieldEnd.setValue(filter.getEnd().getTime());
 		}

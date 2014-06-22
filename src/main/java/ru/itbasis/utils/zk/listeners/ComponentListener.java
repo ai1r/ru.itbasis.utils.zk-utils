@@ -15,21 +15,21 @@ import org.zkoss.zul.Tabpanel;
 import java.util.List;
 
 public class ComponentListener implements Composer {
-	private transient static final Logger LOG = LoggerFactory.getLogger(ComponentListener.class.getName());
+	private static final transient Logger LOG = LoggerFactory.getLogger(ComponentListener.class.getName());
 
 	@Override
-	public void doAfterCompose(Component comp) throws Exception {
+	public void doAfterCompose(final Component comp) throws Exception {
 		LOG.trace("comp: {}", comp);
-		List<Component> list = Selectors.find(comp, Tabbox.class.getSimpleName());
+		final List<Component> list = Selectors.find(comp, Tabbox.class.getSimpleName());
 		LOG.trace("list: {}", list);
 		for (Component cmp : list) {
-			Tabbox tabbox = (Tabbox) cmp;
+			final Tabbox tabbox = (Tabbox) cmp;
 			initTabboxEvents(tabbox);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	private void initTabboxEvents(Tabbox tabbox) {
+	private void initTabboxEvents(final Tabbox tabbox) {
 		LOG.trace("tabbox: {}", tabbox);
 		for (EventListener<? extends Event> eventListener : tabbox.getEventListeners(Events.ON_SELECT)) {
 			if (eventListener instanceof TabSelectListener) {
@@ -37,8 +37,8 @@ public class ComponentListener implements Composer {
 			}
 		}
 		tabbox.addEventListener(Events.ON_SELECT, new TabSelectListener());
-		Tab tab = tabbox.getSelectedTab();
-		Tabpanel tabPanel = tab.getLinkedPanel();
+		final Tab tab = tabbox.getSelectedTab();
+		final Tabpanel tabPanel = tab.getLinkedPanel();
 		LOG.trace("tab: {}, tabPanel: {}", tab, tabPanel);
 		Events.postEvent(Events.ON_SELECT, tab, null);
 	}

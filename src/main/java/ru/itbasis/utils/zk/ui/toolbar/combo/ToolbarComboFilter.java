@@ -12,55 +12,56 @@ import org.zkoss.zul.Popup;
 import org.zkoss.zul.Toolbar;
 import ru.itbasis.utils.zk.LogMsg;
 
+// FIXME Избавиться от параметров в конструкторе
 public class ToolbarComboFilter<T> extends ToolbarCombo {
-	private transient static final Logger LOG = LoggerFactory.getLogger(ToolbarComboFilter.class.getName());
+	private static final transient Logger LOG = LoggerFactory.getLogger(ToolbarComboFilter.class.getName());
 
 	protected T      filter;
 	protected String labelName;
 
 	protected Button btnApply;
 
-	public ToolbarComboFilter(Toolbar toolbar) {
+	public ToolbarComboFilter(final Toolbar toolbar) {
 		super(toolbar);
 	}
 
-	public ToolbarComboFilter(Toolbar toolbar, String labelName) {
+	public ToolbarComboFilter(final Toolbar toolbar, final String lName) {
 		super(toolbar);
-		setLabelName(labelName);
+		setLabelName(lName);
 	}
 
-	public ToolbarComboFilter(Toolbar toolbar, Popup popup) {
+	public ToolbarComboFilter(final Toolbar toolbar, final Popup popup) {
 		super(toolbar, popup);
 	}
 
-	public ToolbarComboFilter(Toolbar toolbar, String labelName, Popup popup) {
+	public ToolbarComboFilter(final Toolbar toolbar, final String lName, final Popup popup) {
 		super(toolbar, popup);
-		setLabelName(labelName);
+		setLabelName(lName);
+	}
+
+	public Button appendButtonApply(final Component parent, final EventListener<Event> listener) {
+		btnApply = new Button(Labels.getLabel("form.action.apply", "apply"));
+		btnApply.setParent(parent);
+		btnApply.addEventListener(Events.ON_CLICK, listener);
+		return btnApply;
 	}
 
 	public T getFilter() {
 		return filter;
 	}
 
-	public void setFilter(T value) {
+	public void setFilter(final T value) {
 		LOG.trace(LogMsg.VALUE, value);
 		this.filter = value;
 		updateLabel();
 		Events.postEvent(Events.ON_CHANGE, _this, value);
 	}
 
-	protected void updateLabel() {
-		setLabel(Labels.getLabel(labelName, new Object[]{filter.toString()}));
-	}
-
-	public void setLabelName(String labelName) {
+	public void setLabelName(final String labelName) {
 		this.labelName = labelName;
 	}
 
-	public Button appendButtonApply(Component parent, EventListener<Event> listener) {
-		btnApply = new Button(Labels.getLabel("form.action.apply", "apply"));
-		btnApply.setParent(parent);
-		btnApply.addEventListener(Events.ON_CLICK, listener);
-		return btnApply;
+	protected void updateLabel() {
+		setLabel(Labels.getLabel(labelName, new Object[]{filter.toString()}));
 	}
 }
