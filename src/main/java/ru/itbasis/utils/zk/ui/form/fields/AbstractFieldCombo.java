@@ -4,10 +4,10 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Combobutton;
 
 @Deprecated
-public abstract class AbstractFieldCombo<T> extends AbstractField<T> {
+public abstract class AbstractFieldCombo<Item> extends AbstractField<Item> {
 	protected Combobutton _combo;
 
-	protected T _item;
+	protected Item _item;
 
 	protected AbstractFieldCombo() {
 		super();
@@ -21,7 +21,7 @@ public abstract class AbstractFieldCombo<T> extends AbstractField<T> {
 	}
 
 	@Override
-	public T getRawValue() {
+	public Item getRawValue() {
 		return _item;
 	}
 

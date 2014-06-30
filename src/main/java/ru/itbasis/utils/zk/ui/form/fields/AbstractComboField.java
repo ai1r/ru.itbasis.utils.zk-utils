@@ -10,10 +10,10 @@ import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Bandpopup;
 import ru.itbasis.utils.core.ISelf;
 
-public abstract class AbstractComboField<T> extends Bandbox implements ISelf<AbstractComboField>, IField<T> {
+public abstract class AbstractComboField<Value> extends Bandbox implements ISelf<AbstractComboField>, IField<Value> {
 	private static final transient Logger LOG = LoggerFactory.getLogger(AbstractComboField.class.getName());
 
-	protected T genericType;
+	protected Value genericType;
 
 	public AbstractComboField() {
 		ConventionWires.wireVariables(this, this);
@@ -21,7 +21,8 @@ public abstract class AbstractComboField<T> extends Bandbox implements ISelf<Abs
 
 		setReadonly(true);
 
-		appendChild(new Bandpopup());
+		final Bandpopup popup = new Bandpopup();
+		appendChild(popup);
 
 		this.addEventListener(Events.ON_OPEN, new Event$Popup$onOpen());
 	}
@@ -32,11 +33,11 @@ public abstract class AbstractComboField<T> extends Bandbox implements ISelf<Abs
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public T getRawValue() {
+	public Value getRawValue() {
 		if (_value == null) {
 			return null;
 		}
-		return (T) _value;
+		return (Value) _value;
 	}
 
 	@Override

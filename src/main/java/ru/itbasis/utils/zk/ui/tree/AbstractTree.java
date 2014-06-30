@@ -47,7 +47,8 @@ public abstract class AbstractTree<Self extends AbstractTree, Category extends I
 	private EventListener<Event> listenerItemDoubleClick;
 
 	protected AbstractTree() {
-		setVflex("true");
+		setVflex(true);
+		setSizedByContent(true);
 		initTreeCols();
 		appendChild(new Treechildren());
 	}
@@ -198,7 +199,7 @@ public abstract class AbstractTree<Self extends AbstractTree, Category extends I
 		makeTreeCategories(tc, categoryList);
 
 		if (itemVisible) {
-			makeTreeItems(tc, category.getItems());
+			makeTreeItems(tc, category.getChildItems());
 		}
 	}
 
@@ -261,7 +262,7 @@ public abstract class AbstractTree<Self extends AbstractTree, Category extends I
 		}
 
 		// TODO Кажется тут можно оптимизировать
-		if (!category.getCategories().isEmpty() || (itemVisible && !category.getItems().isEmpty())) {
+		if (CollectionUtils.isNotEmpty(category.getChildCategories()) || (itemVisible && CollectionUtils.isNotEmpty(category.getChildItems()))) {
 			ti.setOpen(defaultCategoryOpenState);
 			final Treechildren tc1 = new Treechildren();
 			tc1.setParent(ti);
