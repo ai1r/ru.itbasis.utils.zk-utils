@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zk.ui.form.fields;
+package ru.itbasis.utils.zk.ui.form.fields.text;
 
 public class FieldPassword extends FieldText {
 

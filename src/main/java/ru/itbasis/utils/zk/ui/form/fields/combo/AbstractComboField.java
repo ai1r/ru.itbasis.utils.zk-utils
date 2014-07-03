@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zk.ui.form.fields;
+package ru.itbasis.utils.zk.ui.form.fields.combo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +9,7 @@ import org.zkoss.zk.ui.util.ConventionWires;
 import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Bandpopup;
 import ru.itbasis.utils.core.ISelf;
+import ru.itbasis.utils.zk.ui.form.fields.IField;
 
 public abstract class AbstractComboField<Value> extends Bandbox implements ISelf<AbstractComboField>, IField<Value> {
 	private static final transient Logger LOG = LoggerFactory.getLogger(AbstractComboField.class.getName());

@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zk.ui.form.fields;
+package ru.itbasis.utils.zk.ui.form.fields.combo;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

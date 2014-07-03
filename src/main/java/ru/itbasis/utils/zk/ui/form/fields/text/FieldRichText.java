@@ -1,7 +1,8 @@
-package ru.itbasis.utils.zk.ui.form.fields;
+package ru.itbasis.utils.zk.ui.form.fields.text;
 
 import org.zkforge.ckez.CKeditor;
 import org.zkoss.zk.ui.event.Events;
+import ru.itbasis.utils.zk.ui.form.fields.AbstractField;
 
 import java.util.Map;
 

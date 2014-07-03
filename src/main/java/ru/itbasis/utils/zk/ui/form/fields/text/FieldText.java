@@ -1,9 +1,10 @@
-package ru.itbasis.utils.zk.ui.form.fields;
+package ru.itbasis.utils.zk.ui.form.fields.text;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Textbox;
+import ru.itbasis.utils.zk.ui.form.fields.AbstractField;
 
 public class FieldText extends AbstractField<String> {
 	public static final int DEFAULT_ROWS = 3;
