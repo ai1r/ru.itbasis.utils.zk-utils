@@ -9,6 +9,7 @@ import org.zkoss.zk.ui.util.ConventionWires;
 import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Bandpopup;
 import ru.itbasis.utils.core.ISelf;
+import ru.itbasis.utils.zk.LogMsg;
 import ru.itbasis.utils.zk.ui.form.fields.IField;
 
 public abstract class AbstractComboField<Value> extends Bandbox implements ISelf<AbstractComboField>, IField<Value> {
@@ -43,6 +44,7 @@ public abstract class AbstractComboField<Value> extends Bandbox implements ISelf
 
 	@Override
 	public void setRawValue(final Object value) {
+		LOG.trace(LogMsg.VALUE, value);
 		super.setRawValue(value);
 		Events.postEvent(Events.ON_CHANGE, getSelf(), value);
 	}

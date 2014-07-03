@@ -21,7 +21,7 @@ public abstract class AbstractTreeComboField<Value, Service extends ITreeService
 	private Service treeService;
 
 	private Tree   _tree;
-	private Filter filter;
+	private Filter _filter;
 
 	public AbstractTreeComboField() {
 		super();
@@ -45,13 +45,23 @@ public abstract class AbstractTreeComboField<Value, Service extends ITreeService
 	}
 
 	public Filter getFilter() {
-		return filter;
+		return _filter;
 	}
 
 	public void setFilter(final Filter filter) {
-		this.filter = filter;
+		this.setFilterSilent(filter);
 		this.setRawValue(null);
 		this.setText(StringUtils.EMPTY);
+	}
+
+	public void setRawValue(final Filter filter, final Value value) {
+		this.setFilterSilent(filter);
+		this.setRawValue(value);
+	}
+
+	private void setFilterSilent(final Filter filter) {
+		LOG.trace(LogMsg.VALUE, filter);
+		this._filter = filter;
 		Components.removeAllChildren(getDropdown());
 	}
 
@@ -75,7 +85,7 @@ public abstract class AbstractTreeComboField<Value, Service extends ITreeService
 		final Bandpopup popup = getDropdown();
 
 		_tree = getTree();
-		_tree.setFilter(filter).setParent(popup);
+		_tree.setFilter(_filter).setParent(popup);
 	}
 
 	public class Event$Default$TreeItem$onDoubleClick implements EventListener<Event> {
