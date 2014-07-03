@@ -1,5 +1,6 @@
 package ru.itbasis.utils.zk.ui.form.fields;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zkoss.zk.ui.Components;
@@ -49,6 +50,8 @@ public abstract class AbstractTreeComboField<Value, Service extends ITreeService
 
 	public void setFilter(final Filter filter) {
 		this.filter = filter;
+		this.setRawValue(null);
+		this.setText(StringUtils.EMPTY);
 		Components.removeAllChildren(getDropdown());
 	}
 

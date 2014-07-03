@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ru.itbasis.utils</groupId>
 	<artifactId>zk-utils</artifactId>
@@ -32,11 +33,27 @@
 	<scm>
 		<connection>scm:git:git@github.com:BorzdeG/ru.itbasis.utils.zk-utils.git</connection>
 		<developerConnection>scm:git:git@github.com:BorzdeG/ru.itbasis.utils.zk-utils.git</developerConnection>
-		<url>git@github.com:BorzdeG/ru.itbasis.utils.zk-utils</url>
 		<tag>HEAD</tag>
+		<url>git@github.com:BorzdeG/ru.itbasis.utils.zk-utils</url>
 	</scm>
 	<build>
 		<plugins>
+			<plugin>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.12.1</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<configLocation>${project.basedir}/checkstyle.xml</configLocation>
+							<encoding>${project.build.sourceEncoding}</encoding>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -49,49 +66,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.6</version>
-				<configuration>
-					<complianceLevel>${java.version}</complianceLevel>
-					<encoding>${project.build.sourceEncoding}</encoding>
-					<showWeaveInfo>true</showWeaveInfo>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>test-compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjrt</artifactId>
-						<version>${dep.org.aspectj.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjtools</artifactId>
-						<version>${dep.org.aspectj.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.2.1</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.9.1</version>
 				<executions>
@@ -102,6 +76,17 @@
 						<configuration>
 							<additionalparam>-Xdoclint:none</additionalparam>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
@@ -130,20 +115,36 @@
 				</dependencies>
 			</plugin>
 			<plugin>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.12.1</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.6</version>
 				<executions>
 					<execution>
-						<phase>validate</phase>
 						<goals>
-							<goal>check</goal>
+							<goal>compile</goal>
+							<goal>test-compile</goal>
 						</goals>
-						<configuration>
-							<configLocation>${project.basedir}/checkstyle.xml</configLocation>
-							<encoding>${project.build.sourceEncoding}</encoding>
-						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjrt</artifactId>
+						<version>${dep.org.aspectj.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjtools</artifactId>
+						<version>${dep.org.aspectj.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<complianceLevel>${java.version}</complianceLevel>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<showWeaveInfo>true</showWeaveInfo>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -160,9 +161,6 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<configuration>
-							<passphrase>${gpg.passphrase}</passphrase>
-						</configuration>
 						<executions>
 							<execution>
 								<phase>verify</phase>
@@ -171,6 +169,9 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+							<passphrase>${gpg.passphrase}</passphrase>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>
@@ -184,19 +185,13 @@
 	</repositories>
 	<dependencies>
 		<dependency>
-			<groupId>ru.itbasis.utils</groupId>
-			<artifactId>core-utils</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-collections4</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
@@ -212,49 +207,33 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${dep.org.aspectj.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>ru.itbasis.utils</groupId>
+			<artifactId>core-utils</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
-		<!--ZK-->
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zk</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zul</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zhtml</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zkspring-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zkspring-security</artifactId>
+			<groupId>org.zkoss.zkforge</groupId>
+			<artifactId>ckez</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkplus</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.zkoss.zkforge</groupId>
-			<artifactId>ckez</artifactId>
-		</dependency>
-
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>ru.itbasis.utils</groupId>
 				<artifactId>core-utils</artifactId>
-				<version>1.1</version>
+				<version>${dep.ru.itbasis.utils.core-utils.version}</version>
 			</dependency>
 
 			<dependency>
@@ -317,6 +296,7 @@
 		<dep.org.aspectj.version>1.8.0</dep.org.aspectj.version>
 		<dep.org.slf4j.version>1.7.7</dep.org.slf4j.version>
 		<java.version>1.8</java.version>
+		<dep.ru.itbasis.utils.core-utils.version>1.2-SNAPSHOT</dep.ru.itbasis.utils.core-utils.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
 	</properties>
