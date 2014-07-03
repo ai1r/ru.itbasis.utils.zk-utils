@@ -184,6 +184,8 @@ public abstract class AbstractTree<Self extends AbstractTree, Category extends I
 
 	public Self setItemVisible(final boolean value) {
 		this.itemVisible = value;
+		getTreecols().getChildren().stream().filter(component -> (component.hasAttribute(TreeColumns.ATTR_COLUMN_ITEM) && (Boolean) component
+			.getAttribute(TreeColumns.ATTR_COLUMN_ITEM))).forEach(component -> component.setVisible(value));
 		return getSelf();
 	}
 
@@ -232,11 +234,12 @@ public abstract class AbstractTree<Self extends AbstractTree, Category extends I
 		final String sClass = item.getClass().getSimpleName() + " " + (item instanceof ITreeCategory ? "tree-category" : "tree-item");
 		LOG.trace("sclass: '{}'", sClass);
 		row.setSclass(sClass);
-		row.setParent(ti);
+//		row.setParent(ti);
 
 		appendCellTitle(row, item);
 		appendCellDescription(row, item);
 
+		ti.appendChild(row);
 		return ti;
 	}
 

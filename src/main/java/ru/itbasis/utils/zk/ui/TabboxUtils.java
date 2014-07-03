@@ -17,13 +17,13 @@ import java.util.List;
 
 public final class TabboxUtils {
 	public static final String FLAG_TAB_LABEL      = "|";
-	public static final String FLAG_TAB_PAGE_ZUL   = "zul:";
 	public static final String FLAG_TAB_PAGE_CLASS = "class:";
+	public static final String FLAG_TAB_PAGE_ZUL   = "zul:";
 
 	private static final transient Logger LOG = LoggerFactory.getLogger(TabboxUtils.class.getName());
 
-	private static final String PREFIX_TAB_ID     = "tabId_";
 	private static final String LOG_TAB_PAGE_PATH = "tabPagePath: '{}'";
+	private static final String PREFIX_TAB_ID     = "tabId_";
 
 	private TabboxUtils() {
 	}
