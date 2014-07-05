@@ -8,6 +8,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.ConventionWires;
+import org.zkoss.zul.Box;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Hbox;
 import org.zkoss.zul.impl.InputElement;
@@ -68,7 +69,7 @@ public abstract class AbstractField<T> extends AbstractComponent implements IFie
 
 	public HtmlBasedComponent getBox() {
 		if (box == null) {
-			initBox();
+			box = initBox();
 		}
 		return box;
 	}
@@ -86,7 +87,7 @@ public abstract class AbstractField<T> extends AbstractComponent implements IFie
 	}
 
 	protected HtmlBasedComponent initBox() {
-		box = new Hbox();
+		final Box box = new Hbox();
 		box.setHflex(DEFAULT_WIDTH);
 		return box;
 	}

@@ -12,6 +12,7 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.ListitemRenderer;
 import ru.itbasis.utils.zk.LogMsg;
+import ru.itbasis.utils.zk.ui.toolbar.ToolbarButton;
 import ru.itbasis.utils.zk.ui.view.cells.CellFlag;
 
 import java.text.DateFormat;
@@ -26,6 +27,10 @@ public abstract class AbstractViewList extends AbstractView {
 	protected abstract void initHeaders();
 
 	protected abstract void loadData();
+
+	public Listbox getList() {
+		return _list;
+	}
 
 	@Override
 	protected void initLayoutCenterChild() {
@@ -104,8 +109,9 @@ public abstract class AbstractViewList extends AbstractView {
 	public class Event$List$Refresh implements EventListener<Event> {
 		@Override
 		public void onEvent(final Event event) throws Exception {
-			if (actionEdit != null) {
-				actionEdit.setDisabled(true);
+			final ToolbarButton button = getActionEdit();
+			if (button != null) {
+				button.setDisabled(true);
 			}
 			loadData();
 		}
@@ -114,8 +120,9 @@ public abstract class AbstractViewList extends AbstractView {
 	public class Event$Listitem$OnClick implements EventListener<Event> {
 		@Override
 		public void onEvent(final Event event) throws Exception {
-			if (actionEdit != null) {
-				actionEdit.setDisabled(false);
+			final ToolbarButton button = getActionEdit();
+			if (button != null) {
+				button.setDisabled(false);
 			}
 		}
 	}

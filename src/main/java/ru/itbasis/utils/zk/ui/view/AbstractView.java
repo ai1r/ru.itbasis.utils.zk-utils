@@ -11,13 +11,15 @@ import org.zkoss.zul.Toolbar;
 import ru.itbasis.utils.zk.ui.toolbar.ToolbarButton;
 
 public abstract class AbstractView extends Borderlayout {
-	public static final String DEFAULT_VFLEX = "1";
+	public static final String CORE_VIEW_ACTION_ADD  = "core.view.action.add";
+	public static final String CORE_VIEW_ACTION_EDIT = "core.view.action.edit";
+
 	public static final String DEFAULT_HFLEX = "1";
+	public static final String DEFAULT_VFLEX = "1";
 
-	protected Toolbar _toolbar;
-
-	protected ToolbarButton actionAdd;
-	protected ToolbarButton actionEdit;
+	private Toolbar       toolbar;
+	private ToolbarButton actionAdd;
+	private ToolbarButton actionEdit;
 
 	public AbstractView() {
 		ConventionWires.wireVariables(this, this);
@@ -29,22 +31,34 @@ public abstract class AbstractView extends Borderlayout {
 	protected abstract void initToolbar();
 
 	protected ToolbarButton appendActionAdd(final EventListener<Event> listener) {
-		return appendActionAdd("view.action.add", listener);
+		return appendActionAdd(CORE_VIEW_ACTION_ADD, listener);
 	}
 
 	protected ToolbarButton appendActionAdd(final String label, final EventListener<Event> listener) {
-		actionAdd = new ToolbarButton(_toolbar).setLabelResource(label).addClickListener(listener);
+		actionAdd = new ToolbarButton(toolbar).setLabelResource(label).addClickListener(listener);
 		return actionAdd;
 	}
 
 	protected ToolbarButton appendActionEdit(final EventListener<Event> listener) {
-		return appendActionEdit("view.action.edit", listener);
+		return appendActionEdit(CORE_VIEW_ACTION_EDIT, listener);
 	}
 
 	protected ToolbarButton appendActionEdit(final String label, final EventListener<Event> listener) {
-		actionEdit = new ToolbarButton(_toolbar).setLabelResource(label).addClickListener(listener);
+		actionEdit = new ToolbarButton(toolbar).setLabelResource(label).addClickListener(listener);
 		actionEdit.setDisabled(true);
 		return actionEdit;
+	}
+
+	public ToolbarButton getActionAdd() {
+		return actionAdd;
+	}
+
+	public ToolbarButton getActionEdit() {
+		return actionEdit;
+	}
+
+	public Toolbar getToolbar() {
+		return toolbar;
 	}
 
 	protected void initLayoutCenter() {
@@ -59,9 +73,9 @@ public abstract class AbstractView extends Borderlayout {
 		north.setBorder("none");
 		north.setParent(this);
 
-		_toolbar = new Toolbar();
-		_toolbar.setHflex("true");
-		_toolbar.setParent(north);
+		toolbar = new Toolbar();
+		toolbar.setHflex("true");
+		toolbar.setParent(north);
 		initToolbar();
 	}
 
