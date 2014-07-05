@@ -87,9 +87,9 @@ public abstract class AbstractField<T> extends AbstractComponent implements IFie
 	}
 
 	protected HtmlBasedComponent initBox() {
-		final Box box = new Hbox();
-		box.setHflex(DEFAULT_WIDTH);
-		return box;
+		final Box hbox = new Hbox();
+		hbox.setHflex(DEFAULT_WIDTH);
+		return hbox;
 	}
 
 	@SuppressWarnings("unused")
