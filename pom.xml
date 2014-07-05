@@ -301,7 +301,7 @@
 		<dep.org.aspectj.version>1.8.0</dep.org.aspectj.version>
 		<dep.org.slf4j.version>1.7.7</dep.org.slf4j.version>
 		<java.version>1.8</java.version>
-		<dep.ru.itbasis.utils.core-utils.version>1.2-SNAPSHOT</dep.ru.itbasis.utils.core-utils.version>
+		<dep.ru.itbasis.utils.core-utils.version>1.2</dep.ru.itbasis.utils.core-utils.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
 	</properties>
