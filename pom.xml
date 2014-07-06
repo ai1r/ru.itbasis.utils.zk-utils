@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ru.itbasis.utils</groupId>
 	<artifactId>zk-utils</artifactId>
-	<version>3.0</version>
+	<version>3.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>zk-utils</name>
@@ -237,7 +237,7 @@
 			<dependency>
 				<groupId>ru.itbasis.utils</groupId>
 				<artifactId>core-utils</artifactId>
-				<version>1.2</version>
+				<version>${dep.ru.itbasis.utils.core-utils.version}</version>
 			</dependency>
 
 			<dependency>
