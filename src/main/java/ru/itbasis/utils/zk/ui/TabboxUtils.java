@@ -111,7 +111,7 @@ public final class TabboxUtils {
 		return null;
 	}
 
-	private static Tab appendTab(final Tabbox tabbox, final String tabId, final String tabLabel, final Component compChild) {
+	public static Tab appendTab(final Tabbox tabbox, final String tabId, final String tabLabel, final Component compChild) {
 		LOG.trace("tabId: '{}'", tabId);
 		LOG.trace("tabLabel: '{}'", tabLabel);
 		LOG.trace("compChild: {}", compChild);

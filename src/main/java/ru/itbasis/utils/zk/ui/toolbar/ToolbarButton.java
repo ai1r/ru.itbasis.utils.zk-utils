@@ -9,19 +9,21 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Toolbar;
 import org.zkoss.zul.Toolbarbutton;
+import ru.itbasis.utils.core.ISelf;
 import ru.itbasis.utils.zk.LogMsg;
 import ru.itbasis.utils.zk.ui.ILabelResource;
 
-public class ToolbarButton extends Toolbarbutton implements ILabelResource<ToolbarButton> {
+public class ToolbarButton extends Toolbarbutton implements ILabelResource<ToolbarButton>, ISelf<ToolbarButton> {
 	public static final String DEFAULT_LABEL = "button";
 
 	private static final transient Logger LOG = LoggerFactory.getLogger(ToolbarButton.class.getName());
 
 	private static final String MODE_TOGGLE = "toggle";
-	protected ToolbarButton _this;
+
+	public ToolbarButton() {
+	}
 
 	public ToolbarButton(final Toolbar parent) {
-		_this = this;
 		setParent(parent);
 	}
 

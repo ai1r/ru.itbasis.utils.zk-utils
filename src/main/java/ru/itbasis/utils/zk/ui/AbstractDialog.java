@@ -1,5 +1,6 @@
 package ru.itbasis.utils.zk.ui;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zkoss.util.resource.Labels;
@@ -22,6 +23,8 @@ import org.zkoss.zul.LayoutRegion;
 import org.zkoss.zul.North;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Rows;
+import org.zkoss.zul.Tab;
+import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Toolbar;
 import org.zkoss.zul.Vbox;
 import org.zkoss.zul.West;
@@ -30,30 +33,33 @@ import ru.itbasis.utils.core.ISelf;
 import ru.itbasis.utils.zk.LogMsg;
 import ru.itbasis.utils.zk.ui.form.fields.AbstractField;
 
-public abstract class AbstractDialog extends Window implements ISelf<AbstractDialog> {
-	protected static final int    MIN_FORM_WIDTH             = 500;
-	protected static final int    MIN_FORM_HEIGHT            = 400;
-	protected static final int    MIN_PREVIEW_WIDTH          = 400;
-	protected static final String DEFAULT_VFLEX              = "1";
-	protected static final String DEFAULT_HFLEX              = "1";
+public abstract class AbstractDialog<Self extends AbstractDialog> extends Window implements ISelf<Self> {
+	public static final String LABEL_CORE_DIALOG_TAB_GENERAL_TITLE = "core.dialog.tab.general.title";
+
+	public static final String TAB_ID_GENERAL = "tabGeneral";
+
 	protected static final String DEFAULT_COLUMN_LABEL_WIDTH = "35%";
+	protected static final String DEFAULT_HFLEX              = "1";
+	protected static final String DEFAULT_VFLEX              = "1";
+
+	protected static final int MIN_FORM_HEIGHT   = 400;
+	protected static final int MIN_FORM_WIDTH    = 500;
+	protected static final int MIN_PREVIEW_WIDTH = 400;
 
 	private static final transient Logger LOG = LoggerFactory.getLogger(AbstractDialog.class.getName());
 
-	protected Borderlayout _layout;
-	protected Toolbar      _toolbar;
-	protected Grid         _grid;
-
-	private boolean enablePreview;
+	private Borderlayout _layout;
+	private Grid         _gridGeneral;
+	private Toolbar      _toolbar;
+	private boolean      _enablePreview;
+	private Tabbox       _tabBox;
 
 	public AbstractDialog(final Page page) {
 		LOG.trace(LogMsg.PAGE, page);
 
-		setPage(page);
 		setClosable(true);
 		setBorder(true);
-		setTitle(" ");
-		setMode(Mode.MODAL);
+		setTitle(StringUtils.SPACE);
 
 		setMinwidth(MIN_FORM_WIDTH);
 		setMinheight(MIN_FORM_HEIGHT);
@@ -68,27 +74,52 @@ public abstract class AbstractDialog extends Window implements ISelf<AbstractDia
 		ConventionWires.addForwards(this, this);
 
 		initLayout();
+
+		setPage(page);
 	}
 
 	protected abstract void initTitle();
 
-	protected abstract void initToolbar();
-
-	protected Row appendFormRow(final String fieldLabel, final AbstractField fieldComp, final EventListener<Event> listener) {
-		return appendFormRow(fieldLabel, fieldComp.getBox(), listener);
+	protected Row appendRow(final AbstractField field) {
+		LOG.trace("field: {}", field);
+		return appendRow(field.getBox());
 	}
 
-	protected Row appendFormRow(final String fieldLabel, final HtmlBasedComponent fieldComp, final EventListener<Event> listener) {
-		final Row row = appendFormRow(fieldLabel, fieldComp);
+	protected Row appendRow(final HtmlBasedComponent comp) {
+		LOG.trace("comp: {}", comp);
+		final Row row = appendRow();
+
+		final Cell cell = new Cell();
+		cell.setColspan(_gridGeneral.getColumns().getChildren().size());
+		cell.setParent(row);
+
+		comp.setParent(cell);
+
+		return row;
+	}
+
+	protected Row appendRow() {
+		final Row row = new Row();
+		row.setParent(_gridGeneral.getRows());
+		LOG.trace("row: {}", row);
+		return row;
+	}
+
+	protected Row appendRowField(final String fieldLabel, final AbstractField fieldComp, final EventListener<Event> listener) {
+		return appendRowField(fieldLabel, fieldComp.getBox(), listener);
+	}
+
+	protected Row appendRowField(final String fieldLabel, final HtmlBasedComponent fieldComp, final EventListener<Event> listener) {
+		final Row row = appendRowField(fieldLabel, fieldComp);
 		row.addEventListener(Events.ON_CLICK, listener);
 		return row;
 	}
 
-	protected Row appendFormRow(final String fieldLabel, final AbstractField fieldComp) {
-		return appendFormRow(fieldLabel, fieldComp.getBox());
+	protected Row appendRowField(final String fieldLabel, final AbstractField fieldComp) {
+		return appendRowField(fieldLabel, fieldComp.getBox());
 	}
 
-	protected Row appendFormRow(final String fieldLabel, final HtmlBasedComponent fieldComp) {
+	protected Row appendRowField(final String fieldLabel, final HtmlBasedComponent fieldComp) {
 		if (LOG.isTraceEnabled()) {
 			LOG.trace("fieldLabel: {}", fieldLabel);
 			LOG.trace("fieldComp: {}", fieldComp);
@@ -101,40 +132,22 @@ public abstract class AbstractDialog extends Window implements ISelf<AbstractDia
 		return row;
 	}
 
-	protected Row appendRow(final AbstractField field) {
-		LOG.trace("field: {}", field);
-		return appendRow(field.getBox());
-	}
-
-	protected Row appendRow(final HtmlBasedComponent comp) {
-		LOG.trace("comp: {}", comp);
-		final Row row = appendRow();
-
-		final Cell cell = new Cell();
-		cell.setColspan(_grid.getColumns().getChildren().size());
-		cell.setParent(row);
-
-		comp.setParent(cell);
-
-		return row;
-	}
-
-	protected Row appendRow() {
-		final Row row = new Row();
-		row.setParent(_grid.getRows());
-		LOG.trace("row: {}", row);
-		return row;
-	}
-
 	private void disablePreview() {
 		final Center center = _layout.getCenter();
 		Components.removeAllChildren(center);
-		_grid.setParent(center);
+		_gridGeneral.setParent(center);
 		setWidth(MIN_FORM_WIDTH + "px");
 		if (_layout.getWest() != null) {
 			_layout.removeChild(_layout.getWest());
 		}
-		enablePreview = false;
+		_enablePreview = false;
+	}
+
+	public Self disableTabs() {
+		_gridGeneral.setParent(getMainBox());
+		Components.removeAllChildren(_tabBox);
+		_tabBox = null;
+		return getSelf();
 	}
 
 	public void enablePreview(final boolean flag) {
@@ -155,9 +168,15 @@ public abstract class AbstractDialog extends Window implements ISelf<AbstractDia
 		}
 		west.setWidth(formWidth + "px");
 		setWidth((MIN_PREVIEW_WIDTH + formWidth) + "px");
-		_grid.setParent(_layout.getWest());
+		_gridGeneral.setParent(_layout.getWest());
 
-		enablePreview = true;
+		_enablePreview = true;
+	}
+
+	public Self enableTabs() {
+		initTabbox();
+
+		return getSelf();
 	}
 
 	protected LayoutRegion getMainBox() {
@@ -174,8 +193,27 @@ public abstract class AbstractDialog extends Window implements ISelf<AbstractDia
 		return null;
 	}
 
-	protected void initGridColumns() {
-		_grid.appendChild(new GridOneColumn());
+	protected String getTabId(final String suffix) {
+		return getUuid().hashCode() + "_" + suffix;
+	}
+
+	public Toolbar getToolbar() {
+		assert _toolbar != null;
+		return _toolbar;
+	}
+
+	protected void initGridColumns(final Grid grid) {
+		grid.appendChild(new GridOneColumn());
+	}
+
+	private void initGridGeneral(final Component parent) {
+		_gridGeneral = new Grid();
+		_gridGeneral.setVflex(DEFAULT_VFLEX);
+		_gridGeneral.setParent(parent);
+
+		initGridColumns(_gridGeneral);
+
+		new Rows().setParent(_gridGeneral);
 	}
 
 	private void initLayout() {
@@ -185,35 +223,63 @@ public abstract class AbstractDialog extends Window implements ISelf<AbstractDia
 
 		initLayoutNorth();
 		initLayoutCenter();
-		initToolbar();
 	}
 
-	protected void initLayoutCenter() {
+	private void initLayoutCenter() {
 		final Center center = new Center();
 		center.setBorder("true");
 		center.setParent(_layout);
 
-		_grid = new Grid();
-		_grid.setVflex(DEFAULT_VFLEX);
-		_grid.setParent(_layout.getCenter());
-
-		initGridColumns();
-
-		new Rows().setParent(_grid);
+		initGridGeneral(center);
+		initLayoutCenterContent();
 	}
 
-	protected void initLayoutNorth() {
+	protected void initLayoutCenterContent() {
+	}
+
+	private void initLayoutNorth() {
+		_toolbar = new Toolbar();
+		_toolbar.setHflex(DEFAULT_HFLEX);
+		if (!initToolbarContent(_toolbar)) {
+			_toolbar = null;
+			return;
+		}
+
 		final North north = new North();
 		north.setBorder("none");
 		north.setParent(_layout);
+		north.appendChild(_toolbar);
+	}
 
-		_toolbar = new Toolbar();
-		_toolbar.setHflex(DEFAULT_HFLEX);
-		_toolbar.setParent(north);
+	protected void initTabBoxExtTabs(final Tabbox tb) {
+	}
+
+	protected Tab initTabGeneral(final Tabbox tb) {
+		final Tab tab = TabboxUtils.appendTab(tb, getTabId(TAB_ID_GENERAL), Labels.getRequiredLabel(LABEL_CORE_DIALOG_TAB_GENERAL_TITLE), _gridGeneral);
+		tab.setClosable(false);
+		return tab;
+	}
+
+	private void initTabbox() {
+		_tabBox = new Tabbox();
+		_tabBox.setVflex(DEFAULT_VFLEX);
+
+		initTabGeneral(_tabBox);
+		initTabBoxExtTabs(_tabBox);
+
+		getMainBox().appendChild(_tabBox);
+	}
+
+	protected boolean initToolbarContent(final Toolbar tb) {
+		return false;
 	}
 
 	public boolean isEnablePreview() {
-		return enablePreview;
+		return _enablePreview;
+	}
+
+	public boolean isTabEnabled() {
+		return _tabBox != null;
 	}
 
 	public void preview(final Component comp) {
@@ -231,6 +297,13 @@ public abstract class AbstractDialog extends Window implements ISelf<AbstractDia
 		vbox.setAlign("center");
 		vbox.appendChild(new Label(Labels.getLabel("empty.exInfo")));
 		vbox.setParent(infoBox);
+	}
+
+	public Self toogleTabs() {
+		if (isTabEnabled()) {
+			return disableTabs();
+		}
+		return enableTabs();
 	}
 
 	protected class GridOneColumn extends Columns {

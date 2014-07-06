@@ -4,7 +4,6 @@ public class FieldPassword extends FieldText {
 
 	public FieldPassword() {
 		super();
-		_text.setConstraint("");
 		_text.setType("password");
 	}
 
