@@ -91,17 +91,9 @@ public abstract class AbstractViewList extends AbstractView {
 			return cell;
 		}
 
-		/**
-		 * @param prefixLabel If != "" then zclass=prefixLabel+".zclass"
-		 */
-		protected Listcell cellFlag(final Boolean flag, final String prefixLabel) {
-			LOG.trace("flag: {}, prefixLabel: {}", flag, prefixLabel);
-			return new CellFlag(flag, prefixLabel);
-		}
-
 		protected Listcell cellFlag(final Boolean flag) {
 			LOG.trace("flag: {}", flag);
-			return new CellFlag(flag);
+			return new CellFlag().setChecked(flag);
 		}
 
 	}
