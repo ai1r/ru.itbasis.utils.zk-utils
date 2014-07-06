@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zk.ui.form.fields;
+package ru.itbasis.utils.zk.ui.dialog.form.fields;
 
 import org.zkoss.zul.Label;
 

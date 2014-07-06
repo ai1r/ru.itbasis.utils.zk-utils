@@ -1,8 +1,8 @@
-package ru.itbasis.utils.zk.ui.form.fields.combo;
+package ru.itbasis.utils.zk.ui.dialog.form.fields.combo;
 
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Combobutton;
-import ru.itbasis.utils.zk.ui.form.fields.AbstractField;
+import ru.itbasis.utils.zk.ui.dialog.form.fields.AbstractField;
 
 @Deprecated
 public abstract class AbstractFieldCombo<Item> extends AbstractField<Item> {

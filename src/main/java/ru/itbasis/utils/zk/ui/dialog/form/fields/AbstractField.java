@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zk.ui.form.fields;
+package ru.itbasis.utils.zk.ui.dialog.form.fields;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

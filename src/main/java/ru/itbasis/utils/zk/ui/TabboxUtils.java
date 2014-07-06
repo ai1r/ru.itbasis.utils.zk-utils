@@ -51,7 +51,7 @@ public final class TabboxUtils {
 	public static Tab goTab(final Tabbox tabbox, final String label, final Class childClass) {
 		try {
 			final String tabId = PREFIX_TAB_ID + Integer.toString(childClass.getCanonicalName().hashCode());
-			final Tab tab = findTab(tabbox, tabId);
+			final Tab tab = findTabAndActivate(tabbox, tabId);
 			if (tab != null) {
 				return tab;
 			}
@@ -68,7 +68,7 @@ public final class TabboxUtils {
 		}
 
 		final String tabId = PREFIX_TAB_ID + child.getUuid();
-		final Tab tab = findTab(tabbox, tabId);
+		final Tab tab = findTabAndActivate(tabbox, tabId);
 		if (tab != null) {
 			return tab;
 		}
@@ -76,14 +76,23 @@ public final class TabboxUtils {
 		return appendTab(tabbox, tabId, label, child);
 	}
 
-	public static Tab findTab(final Tabbox tabbox, final String tabId) {
+	@SuppressWarnings("unchecked")
+	public static <T extends Tab> T findTabAndActivate(final Tabbox tabbox, final String tabId) {
+		LOG.trace("tabId: {}", tabId);
+		final T tab = findTab(tabbox, tabId);
+		if (tab != null) {
+			tabbox.setSelectedTab(tab);
+		}
+		return tab;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T extends Tab> T findTab(final Tabbox tabbox, final String tabId) {
 		LOG.trace("tabId: {}", tabId);
 
 		final List<Component> tabs = Selectors.find(tabbox, ((!tabId.startsWith("#")) ? ("#" + tabId) : tabId));
 		if (tabs.size() > 0) {
-			final Tab tab = (Tab) tabs.get(0);
-			tabbox.setSelectedTab(tab);
-			return tab;
+			return (T) tabs.get(0);
 		}
 		return null;
 	}
@@ -111,17 +120,11 @@ public final class TabboxUtils {
 		return null;
 	}
 
-	public static Tab appendTab(final Tabbox tabbox, final String tabId, final String tabLabel, final Component compChild) {
-		LOG.trace("tabId: '{}'", tabId);
-		LOG.trace("tabLabel: '{}'", tabLabel);
+	public static <T extends Tab> T appendTab(final Tabbox tabbox, final T tab, final Component compChild) {
+		LOG.trace("tab: {}", tab);
 		LOG.trace("compChild: {}", compChild);
 
 		fixTabPanels(tabbox);
-
-		final Tab tab = new Tab(tabLabel);
-		tab.setClosable(true);
-		tab.setSelected(true);
-		tab.setId(tabId);
 
 		final Tabpanel tabPanel = new Tabpanel();
 		tabPanel.appendChild(compChild);
@@ -132,6 +135,20 @@ public final class TabboxUtils {
 		tabPanel.invalidate();
 
 		return tab;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T extends Tab> T appendTab(final Tabbox tabbox, final String tabId, final String tabLabel, final Component compChild) {
+		LOG.trace("tabId: '{}'", tabId);
+		LOG.trace("tabLabel: '{}'", tabLabel);
+		LOG.trace("compChild: {}", compChild);
+
+		final T tab = (T) new Tab(tabLabel);
+		tab.setClosable(true);
+		tab.setSelected(true);
+		tab.setId(tabId);
+
+		return appendTab(tabbox, tab, compChild);
 	}
 
 	public static void fixTabPanels(final Tabbox tabbox) {

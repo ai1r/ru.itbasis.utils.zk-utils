@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
 public class LoggerAbstractField {
 	private transient static final Logger LOG = LoggerFactory.getLogger(LoggerAbstractField.class.getName());
 
-	@Pointcut("execution(* *.setValue*(..)) && this(ru.itbasis.utils.zk.ui.form.fields.AbstractField)")
+	@Pointcut("execution(* *.setValue*(..)) && this(ru.itbasis.utils.zk.ui.dialog.form.fields.AbstractField)")
 	protected void setValue() {
 	}
 

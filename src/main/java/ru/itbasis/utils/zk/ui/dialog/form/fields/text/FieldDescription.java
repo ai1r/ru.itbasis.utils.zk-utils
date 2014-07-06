@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zk.ui.form.fields.text;
+package ru.itbasis.utils.zk.ui.dialog.form.fields.text;
 
 public class FieldDescription extends FieldText {
 	public FieldDescription() {

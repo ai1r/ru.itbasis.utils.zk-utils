@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zk.ui.form.fields;
+package ru.itbasis.utils.zk.ui.dialog.form.fields;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.zkoss.zk.ui.event.Event;

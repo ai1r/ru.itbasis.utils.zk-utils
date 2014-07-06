@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 public class LoggerAbstractDialogForm {
 	private transient static final Logger LOG = LoggerFactory.getLogger(LoggerAbstractDialogForm.class.getName());
 
-	@Pointcut("execution(* *.loadFieldData()) && this(ru.itbasis.utils.zk.ui.form.AbstractDialogForm)")
+	@Pointcut("execution(* *.loadFieldData()) && this(ru.itbasis.utils.zk.ui.dialog.form.AbstractDialogForm)")
 	protected void loadFieldData() {
 	}
 

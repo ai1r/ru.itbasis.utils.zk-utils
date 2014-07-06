@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zk.ui.form;
+package ru.itbasis.utils.zk.ui.dialog.form;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,10 +6,9 @@ import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zul.Grid;
 import ru.itbasis.utils.core.model.IId;
 import ru.itbasis.utils.zk.LogMsg;
-import ru.itbasis.utils.zk.ui.AbstractDialog;
+import ru.itbasis.utils.zk.ui.dialog.AbstractDialog;
 import ru.itbasis.utils.zk.ui.toolbar.ToolbarButton;
 
 public abstract class AbstractDialogForm<Item extends IId, Self extends AbstractDialogForm> extends AbstractDialog<Self> {
@@ -35,23 +34,9 @@ public abstract class AbstractDialogForm<Item extends IId, Self extends Abstract
 		loadFieldData();
 	}
 
-	protected abstract void initFormFields();
-
 	protected abstract Item fixItem(final Item item);
 
-	protected Item getItem() {
-		assert _itemOrigin != null;
-		if (_itemFix == null) {
-			_itemFix = fixItem(_itemOrigin);
-		}
-		LOG.trace(LogMsg.ITEM, _itemFix);
-		return _itemFix;
-	}
-
-	protected void setItem(final Item value) {
-		LOG.trace(LogMsg.VALUE, value);
-		this._itemFix = value;
-	}
+	protected abstract void initFormFields();
 
 	protected abstract void loadFieldData();
 
@@ -67,14 +52,23 @@ public abstract class AbstractDialogForm<Item extends IId, Self extends Abstract
 		return _actionSave;
 	}
 
-	@Override
-	protected void initTitle() {
-		initTitle(LABEL_CORE_FORM_TITLE_ADD, LABEL_CORE_FORM_TITLE_EDIT);
+	protected Item getItem() {
+		assert _itemOrigin != null;
+		if (_itemFix == null) {
+			_itemFix = fixItem(_itemOrigin);
+		}
+		LOG.trace(LogMsg.ITEM, _itemFix);
+		return _itemFix;
+	}
+
+	protected void setItem(final Item value) {
+		LOG.trace(LogMsg.VALUE, value);
+		this._itemFix = value;
 	}
 
 	@Override
-	protected void initGridColumns(final Grid grid) {
-		grid.appendChild(new GridTwoColumn());
+	protected void initTitle() {
+		initTitle(LABEL_CORE_FORM_TITLE_ADD, LABEL_CORE_FORM_TITLE_EDIT);
 	}
 
 	@Override

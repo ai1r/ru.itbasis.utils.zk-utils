@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zk.ui.form.fields;
+package ru.itbasis.utils.zk.ui.dialog.form.fields;
 
 public interface IField<T> {
 	String ICON_NEW                   = "z-icon-plus";
