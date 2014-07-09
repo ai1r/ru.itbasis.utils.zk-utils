@@ -17,7 +17,7 @@ import org.zkoss.zul.Rows;
 import ru.itbasis.utils.core.ISelf;
 import ru.itbasis.utils.zk.ui.dialog.form.fields.AbstractField;
 
-public abstract class AbstractDialogFrame<Self extends AbstractDialogFrame> extends Grid implements ISelf<Self> {
+public abstract class AbstractDialogFrame<Self extends AbstractDialogFrame> extends Grid implements IDialogFrame<Self> {
 
 	public static final String DEFAULT_COLUMN_LABEL_WIDTH = "35%";
 
