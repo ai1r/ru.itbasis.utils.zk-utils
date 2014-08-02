@@ -13,18 +13,21 @@ import java.lang.reflect.Field;
 
 @Aspect
 public class LoggerAbstractField {
-	private transient static final Logger LOG = LoggerFactory.getLogger(LoggerAbstractField.class.getName());
 
-	@Pointcut("execution(* *.setValue*(..)) && this(ru.itbasis.utils.zk.ui.dialog.form.fields.AbstractField)")
+	@Pointcut("execution(* *.set*(..)) && this(ru.itbasis.utils.zkoss.ui.dialog.form.fields.AbstractField)")
 	protected void setValue() {
 	}
 
 	@Around("setValue()")
 	public Object logSetValue(ProceedingJoinPoint joinPoint) throws Throwable {
-		if (LOG.isTraceEnabled()) {
-			final Signature sig = joinPoint.getSignature();
-			Field field = sig.getDeclaringType().getDeclaredFields()[0];
-			LOG.trace("value: {}", field);
+		final Signature sig = joinPoint.getSignature();
+		final Class aClass = sig.getDeclaringType();
+		final Logger logger = LoggerFactory.getLogger(aClass.getName());
+		if (logger.isTraceEnabled()) {
+			final Field[] fields = aClass.getDeclaredFields();
+			for (Field field : fields) {
+				logger.trace("{}: {}", field.getName(), field);
+			}
 		}
 		return joinPoint.proceed();
 	}

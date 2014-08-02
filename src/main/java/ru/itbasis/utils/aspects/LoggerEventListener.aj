@@ -12,7 +12,6 @@ import java.lang.reflect.Field;
 
 @Aspect
 public class LoggerEventListener {
-	private transient static final Logger LOG = LoggerFactory.getLogger(LoggerEventListener.class.getName());
 
 	@Pointcut("execution(* *.onEvent(..)) && this(org.zkoss.zk.ui.event.EventListener)")
 	public void onEvent() {
@@ -20,11 +19,11 @@ public class LoggerEventListener {
 
 	@Around("onEvent()")
 	public Object logEvent(ProceedingJoinPoint joinPoint) throws Throwable {
-		if (LOG.isTraceEnabled()) {
-			final Signature sig = joinPoint.getSignature();
-			Field field = sig.getDeclaringType().getDeclaredFields()[0];
-			LOG.trace("method: '{}', event: {}", sig.getName(), field);
-		}
+		final Signature sig = joinPoint.getSignature();
+		final Class aClass = sig.getDeclaringType();
+		final Logger logger = LoggerFactory.getLogger(aClass.getName());
+		final Field field = aClass.getDeclaredFields()[0];
+		logger.trace("method: '{}', event: {}", sig.getName(), field);
 		return joinPoint.proceed();
 	}
 }

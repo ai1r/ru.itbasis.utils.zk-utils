@@ -1,7 +1,8 @@
-package ru.itbasis.utils.zk.entity;
+package ru.itbasis.utils.zkoss.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import ru.itbasis.utils.zk.DateUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import ru.itbasis.utils.zkoss.ZkDateUtils;
 
 import java.util.Calendar;
 
@@ -11,8 +12,8 @@ public final class BetweenCalendar {
 
 	public BetweenCalendar() {
 		final Calendar c = Calendar.getInstance();
-		this.setStart(DateUtils.getFirstDay(c));
-		this.setEnd(DateUtils.getLastDay(c));
+		this.setStart(ZkDateUtils.getFirstDay(c));
+		this.setEnd(ZkDateUtils.getLastDay(c));
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zk.listeners;
+package ru.itbasis.utils.zkoss.listeners;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabpanel;
-import ru.itbasis.utils.zk.ui.TabboxUtils;
+import ru.itbasis.utils.zkoss.ui.tabbox.TabboxUtils;
 
 public class TabSelectListener implements EventListener<Event> {
 	private static final transient Logger LOG = LoggerFactory.getLogger(TabSelectListener.class.getName());

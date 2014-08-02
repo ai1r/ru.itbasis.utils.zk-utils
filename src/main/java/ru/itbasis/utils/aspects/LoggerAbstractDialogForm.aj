@@ -12,19 +12,18 @@ import java.lang.reflect.Field;
 
 @Aspect
 public class LoggerAbstractDialogForm {
-	private transient static final Logger LOG = LoggerFactory.getLogger(LoggerAbstractDialogForm.class.getName());
 
-	@Pointcut("execution(* *.loadFieldData()) && this(ru.itbasis.utils.zk.ui.dialog.form.AbstractDialogForm)")
+	@Pointcut("execution(* *.loadFieldData()) && this(ru.itbasis.utils.zkoss.ui.dialog.form.AbstractDialogForm)")
 	protected void loadFieldData() {
 	}
 
 	@Around("loadFieldData()")
 	public Object logLoadFieldData(ProceedingJoinPoint joinPoint) throws Throwable {
-		if (LOG.isTraceEnabled()) {
-			final Signature sig = joinPoint.getSignature();
-			Field field = sig.getDeclaringType().getDeclaredField("_item");
-			LOG.trace("item: {}", field);
-		}
+		final Signature sig = joinPoint.getSignature();
+		final Class aClass = sig.getDeclaringType();
+		final Logger logger = LoggerFactory.getLogger(aClass.getName());
+		final Field field = aClass.getDeclaredField("_item");
+		logger.trace("item: {}", field);
 		return joinPoint.proceed();
 	}
 }
