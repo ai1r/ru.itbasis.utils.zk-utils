@@ -7,8 +7,13 @@ import ru.itbasis.utils.zkoss.ZkDateUtils;
 import java.util.Calendar;
 
 public final class BetweenCalendar {
-	private Calendar start;
-	private Calendar end;
+	private Calendar _start;
+	private Calendar _end;
+
+	public BetweenCalendar(final Calendar start, final Calendar end) {
+		setStart(start);
+		setEnd(end);
+	}
 
 	public BetweenCalendar() {
 		final Calendar c = Calendar.getInstance();
@@ -16,33 +21,33 @@ public final class BetweenCalendar {
 		this.setEnd(ZkDateUtils.getLastDay(c));
 	}
 
-	@Override
-	public String toString() {
-		final ToStringBuilder builder = new ToStringBuilder(this);
-		builder.append("start", this.start != null ? this.start.getTimeInMillis() : null);
-		builder.append("end", this.end != null ? this.end.getTimeInMillis() : null);
-		return builder.toString();
-	}
-
-	public boolean isValid() {
-		return DateUtils.truncatedCompareTo(this.start, this.end, Calendar.DAY_OF_MONTH) <= 0;
-	}
-
-	public Calendar getStart() {
-		return this.start;
-	}
-
-	public BetweenCalendar setStart(final Calendar value) {
-		this.start = value;
-		return this;
-	}
-
 	public Calendar getEnd() {
-		return this.end;
+		return this._end;
 	}
 
 	public BetweenCalendar setEnd(final Calendar value) {
-		this.end = value;
+		this._end = value;
 		return this;
+	}
+
+	public Calendar getStart() {
+		return this._start;
+	}
+
+	public BetweenCalendar setStart(final Calendar value) {
+		this._start = value;
+		return this;
+	}
+
+	public boolean isValid() {
+		return DateUtils.truncatedCompareTo(this._start, this._end, Calendar.DAY_OF_MONTH) <= 0;
+	}
+
+	@Override
+	public String toString() {
+		final ToStringBuilder builder = new ToStringBuilder(this);
+		builder.append("start", this._start != null ? this._start.getTimeInMillis() : null);
+		builder.append("end", this._end != null ? this._end.getTimeInMillis() : null);
+		return builder.toString();
 	}
 }
