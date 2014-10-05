@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 @Aspect
 public class LoggerAbstractField {
 
-	@Pointcut("execution(* *.set*(..)) && this(ru.itbasis.utils.zkoss.ui.dialog.form.fields.AbstractField)")
+	@Pointcut("execution(* *.set*(..)) && this(ru.itbasis.utils.zk.ui.dialog.form.fields.AbstractField)")
 	protected void setValue() {
 	}
 

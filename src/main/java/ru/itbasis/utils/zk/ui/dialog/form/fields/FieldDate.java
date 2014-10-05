@@ -9,6 +9,8 @@ import org.zkoss.zul.Datebox;
 import java.util.Calendar;
 
 public class FieldDate extends AbstractField<Calendar> {
+	private static final long serialVersionUID = 6896420840647708628L;
+
 	private Datebox _date;
 
 	public FieldDate() {

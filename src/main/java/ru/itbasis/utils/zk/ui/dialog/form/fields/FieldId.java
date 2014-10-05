@@ -3,7 +3,9 @@ package ru.itbasis.utils.zk.ui.dialog.form.fields;
 import org.zkoss.zul.Label;
 
 public class FieldId extends AbstractField<Long> {
-	private Long  id;
+	private static final long serialVersionUID = -8433520464391639495L;
+
+	private Long id;
 	private Label label;
 
 	public FieldId() {

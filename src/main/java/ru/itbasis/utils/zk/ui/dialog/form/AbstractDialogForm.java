@@ -6,8 +6,8 @@ import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import ru.itbasis.utils.core.LogMsg;
 import ru.itbasis.utils.core.model.IId;
-import ru.itbasis.utils.zk.LogMsg;
 import ru.itbasis.utils.zk.ui.dialog.AbstractDialog;
 import ru.itbasis.utils.zk.ui.toolbar.ToolbarButton;
 
@@ -30,8 +30,6 @@ public abstract class AbstractDialogForm<Item extends IId, Self extends Abstract
 		super(page);
 		_itemOrigin = item;
 		_itemFix = fixItem(_itemOrigin);
-		initTitle();
-		loadFieldData();
 	}
 
 	protected abstract Item fixItem(final Item item);
@@ -82,6 +80,13 @@ public abstract class AbstractDialogForm<Item extends IId, Self extends Abstract
 		} else {
 			setTitle(Labels.getRequiredLabel(titleEdit));
 		}
+	}
+
+	@Override
+	public void doModal() {
+		initTitle();
+		loadFieldData();
+		super.doModal();
 	}
 
 }

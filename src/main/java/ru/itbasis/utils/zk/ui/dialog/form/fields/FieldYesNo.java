@@ -1,15 +1,12 @@
 package ru.itbasis.utils.zk.ui.dialog.form.fields;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zkoss.mesg.Messages;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.mesg.MZul;
-import ru.itbasis.utils.zk.LogMsg;
 
 public class FieldYesNo extends AbstractField<Boolean> {
-	private static final transient Logger LOG = LoggerFactory.getLogger(FieldYesNo.class.getName());
+	private static final long serialVersionUID = -2802802845447974869L;
 
 	private final Combobox _combo;
 
@@ -34,7 +31,6 @@ public class FieldYesNo extends AbstractField<Boolean> {
 
 	@Override
 	public void setRawValue(final Boolean value) {
-		LOG.trace(LogMsg.VALUE, value);
 		_combo.setSelectedIndex(value ? 1 : 0);
 	}
 }

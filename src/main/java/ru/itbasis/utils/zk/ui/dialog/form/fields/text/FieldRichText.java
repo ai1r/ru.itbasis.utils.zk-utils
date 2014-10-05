@@ -7,6 +7,8 @@ import ru.itbasis.utils.zk.ui.dialog.form.fields.AbstractField;
 import java.util.Map;
 
 public class FieldRichText extends AbstractField<String> {
+	private static final long serialVersionUID = 4403167901059088188L;
+
 	private CKeditor _editor;
 
 	public FieldRichText() {

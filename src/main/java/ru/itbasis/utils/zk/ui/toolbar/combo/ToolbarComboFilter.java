@@ -10,11 +10,13 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Popup;
 import org.zkoss.zul.Toolbar;
-import ru.itbasis.utils.zk.LogMsg;
+import ru.itbasis.utils.core.LogMsg;
 
 // FIXME Избавиться от параметров в конструкторе
 public class ToolbarComboFilter<T> extends ToolbarCombo {
 	private static final transient Logger LOG = LoggerFactory.getLogger(ToolbarComboFilter.class.getName());
+
+	private static final long serialVersionUID = 4717067782571206748L;
 
 	protected T      filter;
 	protected String labelName;
@@ -57,8 +59,8 @@ public class ToolbarComboFilter<T> extends ToolbarCombo {
 		Events.postEvent(Events.ON_CHANGE, _this, value);
 	}
 
-	public void setLabelName(final String labelName) {
-		this.labelName = labelName;
+	public void setLabelName(final String value) {
+		this.labelName = value;
 	}
 
 	protected void updateLabel() {

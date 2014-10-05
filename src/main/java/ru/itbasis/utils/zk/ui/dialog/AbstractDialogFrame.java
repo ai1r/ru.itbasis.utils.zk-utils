@@ -7,24 +7,27 @@ import org.zkoss.zk.ui.HtmlBasedComponent;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zk.ui.util.ConventionWires;
 import org.zkoss.zul.Cell;
-import org.zkoss.zul.Column;
 import org.zkoss.zul.Columns;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Rows;
-import ru.itbasis.utils.core.ISelf;
+import ru.itbasis.utils.zk.ui.ZkDefaultProperties;
+import ru.itbasis.utils.zk.ui.dialog.form.columns.GridOneColumn;
 import ru.itbasis.utils.zk.ui.dialog.form.fields.AbstractField;
 
 public abstract class AbstractDialogFrame<Self extends AbstractDialogFrame> extends Grid implements IDialogFrame<Self> {
 
-	public static final String DEFAULT_COLUMN_LABEL_WIDTH = "35%";
-
 	private static final transient Logger LOG = LoggerFactory.getLogger(AbstractDialogFrame.class.getName());
 
 	public AbstractDialogFrame() {
-		setVflex(AbstractDialog.DEFAULT_VFLEX);
+		ConventionWires.wireVariables(this, this);
+		ConventionWires.addForwards(this, this);
+
+		setVflex(ZkDefaultProperties.DEFAULT_VFLEX);
+
 		initGridColumns().setParent(this);
 		new Rows().setParent(this);
 	}
@@ -83,29 +86,6 @@ public abstract class AbstractDialogFrame<Self extends AbstractDialogFrame> exte
 
 	protected Columns initGridColumns() {
 		return new GridOneColumn();
-	}
-
-	protected class GridOneColumn extends Columns {
-		public GridOneColumn() {
-			setVisible(false);
-
-			final Column c0 = new Column();
-			c0.setParent(this);
-		}
-	}
-
-	protected class GridTwoColumn extends Columns {
-		public GridTwoColumn() {
-			setVisible(false);
-
-			final Column c0 = new Column();
-			c0.setAlign("right");
-			c0.setWidth(DEFAULT_COLUMN_LABEL_WIDTH);
-			c0.setParent(this);
-
-			final Column c1 = new Column();
-			c1.setParent(this);
-		}
 	}
 
 }

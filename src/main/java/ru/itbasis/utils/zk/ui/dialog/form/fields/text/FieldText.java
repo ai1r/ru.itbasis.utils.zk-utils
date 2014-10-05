@@ -13,6 +13,8 @@ public class FieldText extends AbstractField<String> {
 
 	private static final transient Logger LOG = LoggerFactory.getLogger(FieldText.class.getName());
 
+	private static final long serialVersionUID = -576938683137585852L;
+
 	protected Textbox _text;
 
 	public FieldText() {
@@ -30,25 +32,25 @@ public class FieldText extends AbstractField<String> {
 	}
 
 	@Override
-	public void setRawValue(final String value) {
-		if (value == null) {
+	public void setRawValue(final String rawValue) {
+		if (rawValue == null) {
 			_text.setRawValue("");
 			return;
 		}
-		_text.setValue(value);
+		_text.setValue(rawValue);
 	}
 
 	public int getRows() {
 		return _text.getRows();
 	}
 
-	public void setRows(final int value) {
-		assert value > 0;
-		_text.setRows(value);
+	public void setRows(final int rows) {
+		assert rows > 0;
+		_text.setRows(rows);
 	}
 
-	public void setConstraint(final String value) {
-		LOG.debug("constraint: {}", value);
-		_text.setConstraint(value);
+	public void setConstraint(final String constraint) {
+		LOG.debug("constraint: {}", constraint);
+		_text.setConstraint(constraint);
 	}
 }

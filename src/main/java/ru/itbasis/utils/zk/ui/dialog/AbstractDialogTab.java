@@ -3,7 +3,8 @@ package ru.itbasis.utils.zk.ui.dialog;
 import org.zkoss.zk.ui.util.ConventionWires;
 import org.zkoss.zul.Tab;
 
-public abstract class AbstractDialogTab<Frame extends AbstractDialogFrame> extends Tab implements IDialogTab<Frame> {
+@Deprecated
+public abstract class AbstractDialogTab<Frame extends AbstractDialogFrame> extends Tab implements IDialogTab<AbstractDialogTab, Frame> {
 	public AbstractDialogTab() {
 		super();
 		ConventionWires.wireVariables(this, this);

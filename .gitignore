@@ -15,6 +15,7 @@
 **/.idea/dataSources.xml
 **/.idea/dictionaries/
 **/.idea/qaplug_*.xml
+**/.idea/findbugs-idea.xml
 **/.idea/checkstyle-idea.xml
 **/.idea/codeStyleSettings.xml
 *.ipr

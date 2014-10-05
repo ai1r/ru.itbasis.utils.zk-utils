@@ -9,9 +9,9 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Bandpopup;
 import org.zkoss.zul.Treeitem;
+import ru.itbasis.utils.core.LogMsg;
 import ru.itbasis.utils.core.model.ITitle;
 import ru.itbasis.utils.core.service.ITreeService;
-import ru.itbasis.utils.zk.LogMsg;
 import ru.itbasis.utils.zk.ui.tree.AbstractTree;
 
 public abstract class AbstractTreeComboField<Value, Service extends ITreeService, Tree extends AbstractTree, Filter>
@@ -88,11 +88,9 @@ public abstract class AbstractTreeComboField<Value, Service extends ITreeService
 		_tree.setFilter(_filter).setParent(popup);
 	}
 
-	public class Event$Default$TreeItem$onDoubleClick implements EventListener<Event> {
+	public class Event$Default$TreeItem$OnDoubleClick implements EventListener<Event> {
 		@Override
 		public void onEvent(final Event event) throws Exception {
-			LOG.trace(LogMsg.EVENT, event);
-
 			final Treeitem ti = (Treeitem) event.getTarget();
 			setRawValue(getTreeService().getItem(ti.getValue()));
 
@@ -101,11 +99,9 @@ public abstract class AbstractTreeComboField<Value, Service extends ITreeService
 		}
 	}
 
-	public class Event$Default$TreeCategory$onDoubleClick implements EventListener<Event> {
+	public class Event$Default$TreeCategory$OnDoubleClick implements EventListener<Event> {
 		@Override
 		public void onEvent(final Event event) throws Exception {
-			LOG.trace(LogMsg.EVENT, event);
-
 			final Treeitem ti = (Treeitem) event.getTarget();
 			setRawValue(getTreeService().getCategory(ti.getValue()));
 

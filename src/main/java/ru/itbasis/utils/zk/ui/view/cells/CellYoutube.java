@@ -13,7 +13,7 @@ import ru.itbasis.utils.zk.ui.dialog.preview.YoutubePreview;
 public class CellYoutube extends Listcell {
 	private static final transient Logger LOG = LoggerFactory.getLogger(CellYoutube.class.getName());
 
-	private I tagI;
+	private static final long serialVersionUID = 1025336119088052070L;
 
 	public CellYoutube(final String code) {
 		LOG.debug("code: {}", code);
@@ -21,7 +21,7 @@ public class CellYoutube extends Listcell {
 		final Label label = new Label(code);
 		label.setParent(this);
 
-		tagI = new I();
+		final I tagI = new I();
 		tagI.setSclass("z-icon-youtube");
 		tagI.setParent(this);
 		tagI.addEventListener(Events.ON_CLICK, new Event$Preview(code));

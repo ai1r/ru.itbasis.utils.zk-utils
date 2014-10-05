@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zhtml.I;
+import org.zkoss.zk.ui.Page;
 import org.zkoss.zul.Listcell;
 
 // TODO Задокументировать
@@ -12,9 +13,13 @@ import org.zkoss.zul.Listcell;
 public final class CellFlag extends Listcell {
 	public static final String DEFAULT_ZCLASS_CHECKED   = "z-icon-check-square-o";
 	public static final String DEFAULT_ZCLASS_UNCHECKED = "z-icon-square-o";
+
 	public static final String LABEL_SUFFIX_SCLASS = ".zclass";
 	public static final String LABEL_SUFFIX_TITLE  = ".title";
+
 	private static final transient Logger LOG = LoggerFactory.getLogger(CellFlag.class.getName());
+
+	private static final long serialVersionUID = -2226115888117394970L;
 
 	private I _tagI;
 
@@ -67,6 +72,12 @@ public final class CellFlag extends Listcell {
 		return this;
 	}
 
+	@Override
+	public void onPageAttached(final Page newpage, final Page oldpage) {
+		super.onPageAttached(newpage, oldpage);
+		build();
+	}
+
 	private void setState(final String preffix) {
 		final String sclass = (_useLabelZclass ? Labels.getRequiredLabel(preffix + LABEL_SUFFIX_SCLASS) : preffix);
 		LOG.trace("sclass: {}", sclass);
@@ -88,5 +99,4 @@ public final class CellFlag extends Listcell {
 		setChecked(!isChecked());
 		return this;
 	}
-
 }

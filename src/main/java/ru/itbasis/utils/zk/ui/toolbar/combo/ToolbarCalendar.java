@@ -8,7 +8,7 @@ import org.zkoss.zul.Box;
 import org.zkoss.zul.Calendar;
 import org.zkoss.zul.Toolbar;
 import org.zkoss.zul.Vbox;
-import ru.itbasis.utils.zk.DateUtils;
+import ru.itbasis.utils.core.utils.DateUtils;
 
 // FIXME Избавиться от параметров в конструкторе
 public class ToolbarCalendar extends ToolbarComboFilter<java.util.Calendar> {

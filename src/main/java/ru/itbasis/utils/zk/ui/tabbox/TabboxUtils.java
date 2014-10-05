@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zkoss.ui.tabbox;
+package ru.itbasis.utils.zk.ui.tabbox;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import org.zkoss.zul.Tabpanel;
 import org.zkoss.zul.Tabpanels;
 import org.zkoss.zul.Tabs;
 import ru.itbasis.utils.core.LogMsg;
-import ru.itbasis.utils.zkoss.ZulUtils;
+import ru.itbasis.utils.zk.ZulUtils;
 
 import java.util.List;
 

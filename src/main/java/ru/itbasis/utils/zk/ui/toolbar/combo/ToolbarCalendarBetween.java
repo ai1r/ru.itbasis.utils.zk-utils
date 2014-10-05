@@ -1,7 +1,6 @@
 package ru.itbasis.utils.zk.ui.toolbar.combo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.time.DateUtils;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
@@ -12,12 +11,10 @@ import org.zkoss.zul.Calendar;
 import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Toolbar;
 import org.zkoss.zul.Vbox;
-import ru.itbasis.utils.zk.DateUtils;
-import ru.itbasis.utils.zk.LogMsg;
 import ru.itbasis.utils.zk.entity.BetweenCalendar;
 
 public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> {
-	private static final transient Logger LOG = LoggerFactory.getLogger(ToolbarCalendarBetween.class.getName());
+	private static final long serialVersionUID = 4308433607796959147L;
 
 	private Calendar fieldStart;
 	private Calendar fieldEnd;
@@ -65,8 +62,8 @@ public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> 
 
 	@Override
 	protected void updateLabel() {
-		final String sStart = DateUtils.formatAsShortDate(filter.getStart());
-		final String sEnd = DateUtils.formatAsShortDate(filter.getEnd());
+		final String sStart = ru.itbasis.utils.core.utils.DateUtils.formatAsShortDate(filter.getStart());
+		final String sEnd = ru.itbasis.utils.core.utils.DateUtils.formatAsShortDate(filter.getEnd());
 		setLabel(Labels.getRequiredLabel(labelName, new Object[]{sStart, sEnd}));
 	}
 
@@ -75,8 +72,6 @@ public class ToolbarCalendarBetween extends ToolbarComboFilter<BetweenCalendar> 
 
 		@Override
 		public void onEvent(final Event event) throws Exception {
-			LOG.trace(LogMsg.EVENT, event);
-
 			final java.util.Calendar start = DateUtils.toCalendar(fieldStart.getValue());
 			final java.util.Calendar end = DateUtils.toCalendar(fieldEnd.getValue());
 			final BetweenCalendar t = new BetweenCalendar().setStart(start).setEnd(end);

@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zkoss.ui.tabbox;
+package ru.itbasis.utils.zk.ui.tabbox;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -47,8 +47,8 @@ public class TabboxUtilsTest {
 
 	@DataProvider(name = "dataGetComp")
 	public static Object[][] dataGetComp() {
-		return new Object[][]{{"class:ru.itbasis.utils.zkoss.ui.tabbox.DummyGetCompTab0", DummyGetCompTab0.class},
-		                      {"class:ru.itbasis.utils.zkoss.ui.tabbox.DummyGetCompTab1", DummyGetCompTab1.class},
+		return new Object[][]{{"class:ru.itbasis.utils.zk.ui.tabbox.DummyGetCompTab0", DummyGetCompTab0.class},
+		                      {"class:ru.itbasis.utils.zk.ui.tabbox.DummyGetCompTab1", DummyGetCompTab1.class},
 		                      {"zul:dummyGetCompZul0", Include.class},
 		                      {"zul:dummyGetCompZul1", Include.class},
 		                      {"class:unknownClass", null},

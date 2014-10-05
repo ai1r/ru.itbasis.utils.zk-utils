@@ -9,7 +9,7 @@ import org.zkoss.zk.ui.util.ConventionWires;
 import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Bandpopup;
 import ru.itbasis.utils.core.ISelf;
-import ru.itbasis.utils.zk.LogMsg;
+import ru.itbasis.utils.core.LogMsg;
 import ru.itbasis.utils.zk.ui.dialog.form.fields.IField;
 
 public abstract class AbstractComboField<Value> extends Bandbox implements ISelf<AbstractComboField>, IField<Value> {

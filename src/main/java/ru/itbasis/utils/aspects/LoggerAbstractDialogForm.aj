@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
 @Aspect
 public class LoggerAbstractDialogForm {
 
-	@Pointcut("execution(* *.loadFieldData()) && this(ru.itbasis.utils.zkoss.ui.dialog.form.AbstractDialogForm)")
+	@Pointcut("execution(* *.loadFieldData()) && this(ru.itbasis.utils.zk.ui.dialog.form.AbstractDialogForm)")
 	protected void loadFieldData() {
 	}
 

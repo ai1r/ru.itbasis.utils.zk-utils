@@ -6,7 +6,7 @@ import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Tabbox;
-import ru.itbasis.utils.zk.ui.TabboxUtils;
+import ru.itbasis.utils.zk.ui.tabbox.TabboxUtils;
 
 // FIXME Избавиться от параметров в конструкторе
 public class OpenTabListener implements EventListener<Event> {
@@ -25,6 +25,6 @@ public class OpenTabListener implements EventListener<Event> {
 	@Override
 	public void onEvent(final Event event) throws Exception {
 		LOG.trace("clazz: {}", clazz);
-		TabboxUtils.goTab(tabbox, Labels.getRequiredLabel(tabName), clazz);
+		TabboxUtils.getTabFromChildren(tabbox, Labels.getRequiredLabel(tabName), clazz);
 	}
 }

@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zkoss.listeners;
+package ru.itbasis.utils.zk.listeners;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -9,8 +9,8 @@ public interface IField<T> {
 	String CONSTRAINT_NOEMPTY         = "no empty,end_after";
 	String CONSTRAINT_NUMBER_POSITIVE = "no negative,no zero,end_after";
 
-	public T getRawValue();
+	T getRawValue();
 
-	public void setRawValue(T value);
+	void setRawValue(T value);
 
 }

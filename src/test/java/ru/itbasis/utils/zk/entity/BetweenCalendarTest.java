@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zkoss.entity;
+package ru.itbasis.utils.zk.entity;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;

@@ -20,13 +20,13 @@ import org.zkoss.zul.Treecols;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 import ru.itbasis.utils.core.ISelf;
+import ru.itbasis.utils.core.LogMsg;
 import ru.itbasis.utils.core.model.IDescription;
 import ru.itbasis.utils.core.model.IId;
 import ru.itbasis.utils.core.model.ITitle;
 import ru.itbasis.utils.core.model.tree.ITreeCategory;
 import ru.itbasis.utils.core.model.tree.ITreeItem;
 import ru.itbasis.utils.core.service.ITreeService;
-import ru.itbasis.utils.zk.LogMsg;
 
 import java.util.List;
 
@@ -337,7 +337,6 @@ public abstract class AbstractTree<Self extends AbstractTree, Category extends I
 	private final class Event$TreeItem$OnOpen implements EventListener<Event> {
 		@Override
 		public void onEvent(final Event event) throws Exception {
-			LOG.trace(LogMsg.EVENT, event);
 			final Treeitem ti = (Treeitem) event.getTarget();
 			final Treechildren tc = ti.getTreechildren();
 			final Long catId = ti.getValue();

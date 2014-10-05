@@ -18,38 +18,35 @@ import org.zkoss.zul.Toolbar;
 import org.zkoss.zul.Vbox;
 import org.zkoss.zul.West;
 import org.zkoss.zul.Window;
-import ru.itbasis.utils.core.ISelf;
-import ru.itbasis.utils.zk.LogMsg;
-import ru.itbasis.utils.zk.ui.TabboxUtils;
+import ru.itbasis.utils.zk.LabelProperties;
+import ru.itbasis.utils.zk.ZkLogMsg;
+import ru.itbasis.utils.zk.ui.ZkDefaultProperties;
+import ru.itbasis.utils.zk.ui.dialog.form.AbstractDialogFormFrame;
+import ru.itbasis.utils.zk.ui.tabbox.TabboxUtils;
 
-public abstract class AbstractDialog<Self extends AbstractDialog> extends Window implements ISelf<Self> {
-	public static final String DEFAULT_HFLEX = "1";
-	public static final String DEFAULT_VFLEX = "1";
-
-	protected static final int MIN_FORM_HEIGHT   = 400;
-	protected static final int MIN_FORM_WIDTH    = 500;
-	protected static final int MIN_PREVIEW_WIDTH = 400;
+// TODO Убрать имплементацию DefaultProperties - рудимент.
+public abstract class AbstractDialog<Self extends AbstractDialog> extends Window implements IDialog<Self> {
 
 	private static final transient Logger LOG = LoggerFactory.getLogger(AbstractDialog.class.getName());
 
-	private Borderlayout        _layout;
-	private AbstractDialogFrame _frameGeneral;
-	private Toolbar             _toolbar;
-	private boolean             _enablePreview;
-	private Tabbox              _tabBox;
+	private Borderlayout _layout;
+	private IDialogFrame _frameGeneral;
+	private Toolbar      _toolbar;
+	private boolean      _enablePreview;
+	private Tabbox       _tabBox;
 
 	public AbstractDialog(final Page page) {
-		LOG.trace(LogMsg.PAGE, page);
+		LOG.trace(ZkLogMsg.PAGE, page);
 
 		setClosable(true);
 		setBorder(true);
 		setTitle(StringUtils.SPACE);
 
-		setMinwidth(MIN_FORM_WIDTH);
-		setMinheight(MIN_FORM_HEIGHT);
+		setMinwidth(ZkDefaultProperties.MIN_FORM_WIDTH);
+		setMinheight(ZkDefaultProperties.MIN_FORM_HEIGHT);
 
-		setHeight(Integer.toString(MIN_FORM_HEIGHT) + "px");
-		setWidth(Integer.toString(MIN_FORM_WIDTH) + "px");
+		setHeight(Integer.toString(ZkDefaultProperties.MIN_FORM_HEIGHT) + "px");
+		setWidth(Integer.toString(ZkDefaultProperties.MIN_FORM_WIDTH) + "px");
 
 		setMaximizable(true);
 		setSizable(true);
@@ -62,22 +59,35 @@ public abstract class AbstractDialog<Self extends AbstractDialog> extends Window
 		setPage(page);
 	}
 
-	protected abstract AbstractDialogFrame initFrameGeneral();
+	protected abstract IDialogFrame initFrameGeneral();
 
+	@SuppressWarnings("unused")
 	protected abstract void initTitle();
 
-	protected Self appendTab(final AbstractDialogTab tab) {
-		if (!isTabEnabled()) {
-			enableTabs();
-		}
-		tab.setClosable(false);
-		TabboxUtils.appendTab(_tabBox, tab, tab.getFrame());
+	protected Self appendTab(final AbstractDialogFormFrame frame) {
+		return appendTab(new DialogTab<>(frame));
+	}
+
+	private IDialogTab appendTab(final AbstractDialogFormFrame frame, final boolean closable) {
+		return appendTab(new DialogTab<>(frame), closable);
+	}
+
+	protected Self appendTab(final DialogTab tab) {
+		appendTab(tab, false);
 		return getSelf();
 	}
 
-	protected Self appendTabClosable(final AbstractDialogTab tab) {
-		appendTab(tab);
-		tab.setClosable(true);
+	protected IDialogTab appendTab(final DialogTab tab, final boolean closable) {
+		if (!isTabEnabled()) {
+			enableTabs();
+		}
+		tab.setClosable(closable);
+		return TabboxUtils.appendTab(_tabBox, tab, tab.getFrame());
+	}
+
+	@SuppressWarnings("unused")
+	protected Self appendTabClosable(final DialogTab tab) {
+		appendTab(tab, true);
 		return getSelf();
 	}
 
@@ -87,7 +97,7 @@ public abstract class AbstractDialog<Self extends AbstractDialog> extends Window
 		final Center center = _layout.getCenter();
 		Components.removeAllChildren(center);
 		_frameGeneral.setParent(center);
-		setWidth(MIN_FORM_WIDTH + "px");
+		setWidth(ZkDefaultProperties.MIN_FORM_WIDTH + "px");
 		if (_layout.getWest() != null) {
 			_layout.removeChild(_layout.getWest());
 		}
@@ -98,15 +108,6 @@ public abstract class AbstractDialog<Self extends AbstractDialog> extends Window
 		Components.removeAllChildren(_tabBox);
 		_tabBox = null;
 		return getSelf();
-	}
-
-	public void enablePreview(final boolean flag) {
-		_enablePreview = flag;
-		if (flag) {
-			enablePreview(MIN_FORM_WIDTH);
-		} else {
-			disablePreview();
-		}
 	}
 
 	public void enablePreview(final int formWidth) {
@@ -120,17 +121,83 @@ public abstract class AbstractDialog<Self extends AbstractDialog> extends Window
 			west.setParent(_layout);
 		}
 		west.setWidth(formWidth + "px");
-		setWidth((MIN_PREVIEW_WIDTH + formWidth) + "px");
+		setWidth((ZkDefaultProperties.MIN_PREVIEW_WIDTH + formWidth) + "px");
 		_frameGeneral.setParent(getMainBox());
 	}
 
-	public Self enableTabs() {
-		initTabbox();
+	@Override
+	public Self enablePreview(final boolean flag) {
+		_enablePreview = flag;
+		if (flag) {
+			enablePreview(ZkDefaultProperties.MIN_FORM_WIDTH);
+		} else {
+			disablePreview();
+		}
+		return getSelf();
+	}
+
+	@Override
+	public Toolbar getToolbar() {
+		assert _toolbar != null;
+		return _toolbar;
+	}
+
+	@Override
+	public boolean isEnablePreview() {
+		return _layout.getWest() != null;
+	}
+
+	@Override
+	public boolean isTabEnabled() {
+		return _tabBox != null;
+	}
+
+	@Override
+	public Self setTabEnabled(final boolean flag) {
+		if (flag) {
+			enableTabs();
+		} else {
+			disableTabs();
+		}
+		return getSelf();
+	}
+
+	@Override
+	public LayoutRegion setPreview(final Component comp) {
+		if (!isEnablePreview()) {
+			enablePreview(true);
+		}
+
+		final Center infoBox = _layout.getCenter();
+		Components.removeAllChildren(infoBox);
+		if (comp != null) {
+			comp.setParent(infoBox);
+			return null;
+		}
+
+		final Vbox vbox = new Vbox();
+		vbox.setPack("center");
+		vbox.setAlign("center");
+		vbox.appendChild(new Label(Labels.getLabel(LABEL_CORE_EMPTY_EXT_INFO, "no data...")));
+		vbox.setParent(infoBox);
+		return getPreviewBox();
+	}
+
+	@Override
+	public Self toogleTabs() {
+		if (isTabEnabled()) {
+			return disableTabs();
+		}
+		return enableTabs();
+	}
+
+	private Self enableTabs() {
+		initTabBox();
 		return getSelf();
 	}
 
 	@SuppressWarnings("unchecked")
-	protected <T extends AbstractDialogFrame> T getFrameGeneral() {
+	protected <T extends IDialogFrame> T getFrameGeneral() {
 		if (_frameGeneral == null) {
 			_frameGeneral = initFrameGeneral();
 		}
@@ -155,14 +222,9 @@ public abstract class AbstractDialog<Self extends AbstractDialog> extends Window
 		return getUuid().hashCode() + "_" + suffix;
 	}
 
-	public Toolbar getToolbar() {
-		assert _toolbar != null;
-		return _toolbar;
-	}
-
 	private void initLayout() {
 		_layout = new Borderlayout();
-		_layout.setVflex(DEFAULT_VFLEX);
+		_layout.setVflex(ZkDefaultProperties.DEFAULT_VFLEX);
 		_layout.setParent(this);
 
 		initLayoutNorth();
@@ -176,20 +238,20 @@ public abstract class AbstractDialog<Self extends AbstractDialog> extends Window
 
 		_frameGeneral = initFrameGeneral();
 		_frameGeneral.setParent(center);
-
 		initLayoutCenterContent();
 	}
 
+	@Deprecated
 	protected void initLayoutCenterContent() {
 	}
 
 	private void initLayoutNorth() {
 		_toolbar = new Toolbar();
-		_toolbar.setHflex(DEFAULT_HFLEX);
 		if (!initToolbarContent(_toolbar)) {
 			_toolbar = null;
 			return;
 		}
+		_toolbar.setHflex(ZkDefaultProperties.DEFAULT_HFLEX);
 
 		final North north = new North();
 		north.setBorder("none");
@@ -197,20 +259,9 @@ public abstract class AbstractDialog<Self extends AbstractDialog> extends Window
 		north.appendChild(_toolbar);
 	}
 
-	protected void initTabBoxExtTabs(final Tabbox tb) {
-	}
-
-	protected AbstractDialogTab initTabGeneral(final Tabbox tb) {
-		final TabDefault tab = TabboxUtils.findTab(tb, getTabId(IDialogTab.TAB_ID_GENERAL));
-		if (tab == null) {
-			appendTab(new TabDefault());
-		}
-		return tab;
-	}
-
-	private void initTabbox() {
+	private void initTabBox() {
 		_tabBox = new Tabbox();
-		_tabBox.setVflex(DEFAULT_VFLEX);
+		_tabBox.setVflex(ZkDefaultProperties.DEFAULT_VFLEX);
 
 		initTabGeneral(_tabBox);
 		initTabBoxExtTabs(_tabBox);
@@ -218,50 +269,21 @@ public abstract class AbstractDialog<Self extends AbstractDialog> extends Window
 		getMainBox().appendChild(_tabBox);
 	}
 
+	@SuppressWarnings("unused")
+	protected void initTabBoxExtTabs(final Tabbox tb) {
+	}
+
+	private DialogTab initTabGeneral(final Tabbox tb) {
+		final DialogTab tab = TabboxUtils.findTab(tb, getTabId(IDialogTab.TAB_ID_GENERAL));
+		if (tab == null) {
+			appendTab(new DialogTab<>(getFrameGeneral(), Labels.getRequiredLabel(LabelProperties.LABEL_CORE_DIALOG_TAB_GENERAL_TITLE)));
+		}
+		return tab;
+	}
+
+	@SuppressWarnings("unused")
 	protected boolean initToolbarContent(final Toolbar tb) {
 		return false;
 	}
 
-	public boolean isEnablePreview() {
-		return _enablePreview;
-	}
-
-	public boolean isTabEnabled() {
-		return _tabBox != null;
-	}
-
-	public void preview(final Component comp) {
-		if (_layout.getWest() == null) {
-			return;
-		}
-		final Center infoBox = _layout.getCenter();
-		Components.removeAllChildren(infoBox);
-		if (comp != null) {
-			comp.setParent(infoBox);
-			return;
-		}
-		final Vbox vbox = new Vbox();
-		vbox.setPack("center");
-		vbox.setAlign("center");
-		vbox.appendChild(new Label(Labels.getLabel("empty.exInfo")));
-		vbox.setParent(infoBox);
-	}
-
-	public Self toogleTabs() {
-		if (isTabEnabled()) {
-			return disableTabs();
-		}
-		return enableTabs();
-	}
-
-	private class TabDefault extends AbstractDialogTab<AbstractDialogFrame> {
-		public TabDefault() {
-			super(Labels.getRequiredLabel(IDialogTab.LABEL_CORE_DIALOG_TAB_GENERAL_TITLE));
-		}
-
-		@Override
-		public AbstractDialogFrame getFrame() {
-			return getFrameGeneral();
-		}
-	}
 }

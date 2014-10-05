@@ -9,7 +9,7 @@
 		</layout>
 	</appender>
 
-	<category name="ru.itbasis.utils.zkoss">
+	<category name="ru.itbasis.utils.zk">
 		<priority value="TRACE" />
 	</category>
 

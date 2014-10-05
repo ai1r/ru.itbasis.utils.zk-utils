@@ -1,4 +1,4 @@
-package ru.itbasis.utils.zkoss.ui.tabbox;
+package ru.itbasis.utils.zk.ui.tabbox;
 
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Tab;

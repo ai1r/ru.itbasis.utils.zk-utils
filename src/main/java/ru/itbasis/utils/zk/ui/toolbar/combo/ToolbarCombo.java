@@ -1,7 +1,5 @@
 package ru.itbasis.utils.zk.ui.toolbar.combo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -15,7 +13,7 @@ import org.zkoss.zul.Popup;
 import org.zkoss.zul.Toolbar;
 
 public class ToolbarCombo extends Combobutton {
-	private static final transient Logger LOG = LoggerFactory.getLogger(ToolbarCombo.class.getName());
+	private static final long serialVersionUID = 6970125631712651501L;
 
 	protected Component _this;
 
